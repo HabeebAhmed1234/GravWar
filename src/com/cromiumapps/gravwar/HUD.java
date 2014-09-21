@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.andengine.entity.primitive.Line;
 
+import com.cromiumapps.gravwar.Planet.PlanetType;
+
 import android.util.Log;
 
 
@@ -33,16 +35,15 @@ public class HUD {
 	
 	public boolean isMovePermissible(Move move, PlanetManager planetManager)
 	{
-		if(move.from == null || move.to == null || move.from.isNeutral())return false;
-		Log.d(TAG,"from id = "+move.from.getId()+" to id = "+move.to.getId());
+		if(planetManager.getPlanetByID(move.fromPlanetId).isNeutral())return false;
 		for(int i = 0 ; i< paths.size() ; i++)
 		{
 			Path path = paths.get(i);
-			if((path.planetA.getId() == move.from.getId() && path.planetB.getId() == move.to.getId()) || 
-			   (path.planetB.getId() == move.from.getId() && path.planetA.getId() == move.to.getId()))
+			if((path.planetA.getId() == move.fromPlanetId && path.planetB.getId() == move.toPlanetId) || 
+			   (path.planetB.getId() == move.fromPlanetId && path.planetA.getId() == move.toPlanetId))
 			{
 				Log.d(TAG,"path.planetA id = "+path.planetA.getId()+" path.planetB id = "+path.planetB.getId());
-				if(move.isAiMove && move.from.isEnemy() || !move.isAiMove && move.from.isPlayerPlanet()){
+				if(move.isAiMove && move.fromPlanetType == PlanetType.PLANET_TYPE_ENEMY || !move.isAiMove && move.fromPlanetType == PlanetType.PLANET_TYPE_PLAYER){
 					return true;
 				}
 			}

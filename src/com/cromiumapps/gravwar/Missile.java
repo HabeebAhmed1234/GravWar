@@ -7,6 +7,8 @@ import java.nio.FloatBuffer;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import com.cromiumapps.gravwar.Planet.PlanetType;
+
 import android.opengl.GLES20;
 import android.util.Log;
 
@@ -18,15 +20,18 @@ public class Missile {
 	private Position m_originPosition = new Position(0,0);
 	private Position m_destinationPosition = new Position(0,0);
 	private GameSprite missileSprite;
-	private final Planet fromPlanet;
+	private final PlanetType fromPlanetType;
+	private final float fromPlanetId;
 	private float m_id = 0;
 	private float v_x = 3;
 	private float v_y = 3;
 	
-	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager textureManager)
+	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager textureManager) throws InvalidMissileException
 	{ 
 		m_id = id;
-		this.fromPlanet = fromPlanet;
+		this.fromPlanetType = fromPlanet.getPlanetType();
+		this.fromPlanetId = fromPlanet.getId();
+		if(fromPlanetType == PlanetType.PLANET_TYPE_NEUTRAL) throw new InvalidMissileException("origin planet is neutral");
 		this.v_x = vxvy[0];    
 		this.v_y = vxvy[1];
 		m_position = new Position(origin.getX(),origin.getY());
@@ -40,14 +45,13 @@ public class Missile {
 		Log.d("MissileSystem","added missile sprite of id = "+m_id);
 	}
 	
-	public Planet getSourcePlanet()
-	{
-		return this.fromPlanet;
+	public float getSourcePlanetId(){
+		return this.fromPlanetId;
 	}
 	
-	public PlanetType sourcePlanetType()
+	public PlanetType getSourcePlanetType()
 	{
-		return fromPlanet.getPlanetType();
+		return fromPlanetType;
 	}
 	 
 	public float getId() 
@@ -127,5 +131,17 @@ public class Missile {
 	public void dock()
 	{
 		missileSprite.detachSelf();
+	}
+}
+
+class InvalidMissileException extends Exception{
+	public static final String TAG = "InvalidMissileException";
+	private String what;
+	InvalidMissileException(String what){
+		this.what = what;
+	}
+	
+	public void printWhat(){
+		Log.d(TAG,what);
 	}
 }

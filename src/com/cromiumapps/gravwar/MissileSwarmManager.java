@@ -19,9 +19,9 @@ public class MissileSwarmManager {
 		this.gameTextureManager = gameTextureManager;
 	}
 	
-	public void addMissileSwarm(Planet fromPlanet, float originPlanetRadius, Position origin,Position destination, float numPlanetsReadyToFire)
+	public void addMissileSwarm(Planet fromPlanet, Planet toPlanet, float numPlanetsReadyToFire) throws InvalidMissileException
 	{
-		MissileSwarm newMissileSwarm = new MissileSwarm(getUniqueMissileSwarmId(),fromPlanet,numPlanetsReadyToFire, originPlanetRadius, origin,destination,gameScene,vertexBufferObjectManager, gameTextureManager);
+		MissileSwarm newMissileSwarm = new MissileSwarm(getUniqueMissileSwarmId(),fromPlanet,numPlanetsReadyToFire, fromPlanet.getDiameter()/2, fromPlanet.getPosition(), toPlanet.getPosition(), gameScene,vertexBufferObjectManager, gameTextureManager);
 		m_missileSwarms.add(newMissileSwarm);
 		Log.d("MissileSystem","New Missile Swarm added id = "+newMissileSwarm.getId());
 	}

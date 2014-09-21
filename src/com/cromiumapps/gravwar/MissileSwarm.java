@@ -12,7 +12,7 @@ public class MissileSwarm {
 	private ArrayList <Missile> m_missiles;
 	private float m_id;
 	
-	MissileSwarm (float id,Planet fromPlanet, float numMissilesReadyToFire, float originPlanetRadius, Position origin, Position destination, GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager gameTextTextureManager)
+	MissileSwarm (float id,Planet fromPlanet, float numMissilesReadyToFire, float originPlanetRadius, Position origin, Position destination, GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager gameTextTextureManager) throws InvalidMissileException
 	{
 		m_id = id;
 		m_missiles = new ArrayList<Missile>();

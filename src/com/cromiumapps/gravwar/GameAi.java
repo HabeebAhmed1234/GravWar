@@ -37,33 +37,37 @@ public class GameAi {
 		{
 			for(int x = 0 ; x < allPlanets.size() ; x++)
 			{
-				Planet planetA = allPlanets.get(i);
-				Planet planetB = allPlanets.get(x);
-				if(planetA.getId() != planetB.getId())
-				{
-					if(planetA.isEnemy() && planetB.isPlayerPlanet())
+				try{
+					Planet planetA = allPlanets.get(i);
+					Planet planetB = allPlanets.get(x);
+					if(planetA.getId() != planetB.getId())
 					{
-						movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true));
-					}
-					
-					if(planetB.isEnemy() && planetA.isPlayerPlanet())
-					{
-						movesList.add(new Move(howManyMissilesShouldIFire(planetB), planetB, planetA,true));
-					}
-					
-					if(planetA.isEnemy() && planetB.isNeutral())
-					{
-						movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true));
-					}
-					
-					if(planetA.isEnemy() && planetB.isEnemy())
-					{
-						if(planetA.getPosition().getY()>planetB.getPosition().getY()){
-							movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true)); 
-						}else{
-							movesList.add(new Move(howManyMissilesShouldIFire(planetB), planetB, planetA,true)); 
+						if(planetA.isEnemy() && planetB.isPlayerPlanet())
+						{
+							movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true));
+						}
+						
+						if(planetB.isEnemy() && planetA.isPlayerPlanet())
+						{
+							movesList.add(new Move(howManyMissilesShouldIFire(planetB), planetB, planetA,true));
+						}
+						
+						if(planetA.isEnemy() && planetB.isNeutral())
+						{
+							movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true));
+						}
+						
+						if(planetA.isEnemy() && planetB.isEnemy())
+						{
+							if(planetA.getPosition().getY()>planetB.getPosition().getY()){
+								movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true)); 
+							}else{
+								movesList.add(new Move(howManyMissilesShouldIFire(planetB), planetB, planetA,true)); 
+							}
 						}
 					}
+				}catch (InvalidMoveException e){
+					e.printWhat();
 				}
 			}	
 		}

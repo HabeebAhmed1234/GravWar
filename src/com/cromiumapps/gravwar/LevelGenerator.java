@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import com.cromiumapps.gravwar.Planet.PlanetType;
+
 import android.util.Log;
 
 public class LevelGenerator {
@@ -68,7 +70,7 @@ public class LevelGenerator {
 		{
 			totalMissiles-=missilesPerPlanet;
 			//create new planet with null id since id is set by the planet manager
-			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, new PlanetType(PlanetType.PLANET_TYPE_ENEMY), this.vertexBufferObjectManager, gameManager, gameScene, gametextureManager);
+			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_ENEMY, this.vertexBufferObjectManager, gameManager, gameScene, gametextureManager);
 			Position pos = getLegalPosition(true,newEnemyPlanet.getDiameter());
 			newEnemyPlanet.setPosition((int)pos.getX(),(int)pos.getY());
 			m_levelPlanets.add(newEnemyPlanet);
@@ -82,7 +84,7 @@ public class LevelGenerator {
 		while(totalMissiles>0)
 		{
 			totalMissiles-=missilesPerPlanet;
-			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, new PlanetType(PlanetType.PLANET_TYPE_PLAYER), vertexBufferObjectManager, gameManager,gameScene, gametextureManager);
+			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_PLAYER, vertexBufferObjectManager, gameManager,gameScene, gametextureManager);
 			Position pos = getLegalPosition(false,newEnemyPlanet.getDiameter());
 			newEnemyPlanet.setPosition((int)pos.getX(),(int)pos.getY());
 			m_levelPlanets.add(newEnemyPlanet);

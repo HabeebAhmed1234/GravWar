@@ -40,24 +40,26 @@ public class CollisionManager {
 	
 	private boolean isColliding(Missile missile, Planet planet)
 	{
-		if(missile.getSourcePlanet().getId() == planet.getId()) return false;
+		if(missile.getSourcePlanetId() == planet.getId()) return false;
 		return missile.getSprite().collidesWith(planet.getSprite());
 	}
 	
 	private void collided(Missile missile, Planet planet)
 	{
-		Log.d(TAG,"collision missileSource = "+missile.getSourcePlanet().getPlanetType().toString()
+		Log.d(TAG,"collision missileSource = "+missile.getSourcePlanetType()
 				+" to planet = "+planet.getPlanetType().toString());
 		
-		if((missile.getSourcePlanet().isPlayerPlanet() && planet.isEnemy()) || (missile.getSourcePlanet().isEnemy() && planet.isPlayerPlanet()))
+		if((missile.getSourcePlanetType() == PlanetType.PLANET_TYPE_PLAYER && planet.isEnemy()) 
+		|| (missile.getSourcePlanetType() == PlanetType.PLANET_TYPE_ENEMY && planet.isPlayerPlanet()))
 		{
 			gameManager.missileSwarmManager.collided(missile.getId());
 			gameManager.planetManager.hit(planet.getId());
 		}
 		
-		if((missile.getSourcePlanet().isEnemy() && planet.isEnemy()) || (missile.getSourcePlanet().isPlayerPlanet() && planet.isPlayerPlanet()))
+		if((missile.getSourcePlanetType() == PlanetType.PLANET_TYPE_ENEMY && planet.isEnemy()) 
+		|| (missile.getSourcePlanetType() == PlanetType.PLANET_TYPE_PLAYER  && planet.isPlayerPlanet()))
 		{
-			Log.d(TAG+"1","collision missileSource = "+missile.getSourcePlanet().getPlanetType().toString()
+			Log.d(TAG+"1","collision missileSource = "+missile.getSourcePlanetType()
 					+" to planet = "+planet.getPlanetType().toString());
 			gameManager.missileSwarmManager.docked(missile.getId());
 			gameManager.planetManager.dockedMissile(planet.getId());
@@ -66,11 +68,11 @@ public class CollisionManager {
 		if(planet.isNeutral())
 		{
 			gameManager.missileSwarmManager.docked(missile.getId());
-			if(missile.sourcePlanetType() == PlanetType.PLANET_TYPE_ENEMY)
+			if(missile.getSourcePlanetType() == PlanetType.PLANET_TYPE_ENEMY)
 			{
 				gameManager.planetManager.convertedPlanet(planet.getId(),PlanetType.PLANET_TYPE_ENEMY);	
 			}
-			if(missile.sourcePlanetType() == PlanetType.PLANET_TYPE_PLAYER)
+			if(missile.getSourcePlanetType() == PlanetType.PLANET_TYPE_PLAYER)
 			{
 				gameManager.planetManager.convertedPlanet(planet.getId(),PlanetType.PLANET_TYPE_PLAYER);	
 			}

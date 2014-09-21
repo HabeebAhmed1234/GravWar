@@ -15,6 +15,8 @@ public class GameManager {
 		public void onGameOutComeListener(int gameOutCom, float timeElapsed);
 	}
 	
+	public static String TAG = "GameManager";
+	
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	
 	//andengine objects
@@ -132,7 +134,11 @@ public class GameManager {
 		Log.d("GravWar", "GameManager: touch event on a planet of id +" + touchedPlanetID);
 		Planet prevSelectedPlanet = planetManager.getSelectedPlanet();
 		Planet touchedPlanet = planetManager.getPlanetByID(touchedPlanetID);
-		makeAMove(new Move(numMissilesReadyToFire,prevSelectedPlanet,touchedPlanet,false));
+		try {
+			if(prevSelectedPlanet!=null)makeAMove(new Move(numMissilesReadyToFire,prevSelectedPlanet,touchedPlanet,false));
+		} catch (InvalidMoveException e) {
+			e.printWhat();
+		}
 		planetManager.selectPlanetByID(touchedPlanetID);
 	}
 	
@@ -141,11 +147,17 @@ public class GameManager {
 		if(move.missilesToFireAmmount>0)
 		{
 			
-			if(this.hud.isMovePermissible(move,planetManager) && move.from!=null && !(move.from.getId()==move.to.getId()))
+			if(this.hud.isMovePermissible(move,planetManager))
 			{
-				Log.d("GravWar", "GameManager: firing missile swarm from planet id " + move.from.getId()+" to planet id"+move.to.getId());
-				this.missileSwarmManager.addMissileSwarm(move.from,move.from.getDiameter()/2,move.from.getPosition(), move.to.getPosition(), move.missilesToFireAmmount);
-				move.from.damageHealth(move.missilesToFireAmmount);
+				Log.d("GravWar", "GameManager: firing missile swarm from planet id " + move.fromPlanetId+" to planet id"+move.toPlanetId);
+				try {
+					this.missileSwarmManager.addMissileSwarm( planetManager.getPlanetByID(move.fromPlanetId)
+															, planetManager.getPlanetByID(move.toPlanetId)
+															, move.missilesToFireAmmount);
+					planetManager.getPlanetByID(move.fromPlanetId).damageHealth(move.missilesToFireAmmount);
+				} catch (InvalidMissileException e) {
+					e.printWhat();
+				}
 			}
 		}
 	}
