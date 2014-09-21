@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GravWar</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_game_finished">GameFinishedActivity</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="gametitle">GravWar</string>
+    <string name="restartbuttonlabel">Restart</string>
+    <string name="quickgamebuttonlabel">Quick Game</string>
+    <string name="mainmenubuttonlabel">Main Menu</string>
+    <string name="outcometextlabel">Outcome</string>
+
+</resources>

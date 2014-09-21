@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameFinishedActivity" >
+
+    <TextView
+        android:id="@+id/gameoutcometext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50sp"
+        android:text="@string/outcometextlabel" />
+    
+    <TextView
+        android:id="@+id/timetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/gameoutcometext"
+        android:layout_marginTop="5sp"
+        android:text="00:00" />
+    
+    <Button 
+        android:id="@+id/restartbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/timetext"
+        android:layout_marginTop="80sp"
+        android:text="@string/restartbuttonlabel"
+        />
+    
+    <Button 
+        android:id="@+id/mainmenubutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/restartbutton"
+        android:layout_marginTop="10sp"
+        android:text="@string/mainmenubuttonlabel"
+        />
+
+</RelativeLayout>
