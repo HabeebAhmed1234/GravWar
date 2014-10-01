@@ -10,18 +10,16 @@ public class MissileSwarmManager {
 	private ArrayList <MissileSwarm> m_missileSwarms = new ArrayList <MissileSwarm>();;
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	private GameScene gameScene;
-	private GameTextureManager gameTextureManager;
 	
-	MissileSwarmManager(GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager gameTextureManager)
+	MissileSwarmManager(GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager)
 	{
 		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.gameScene = gameScene;
-		this.gameTextureManager = gameTextureManager;
 	}
 	
 	public void addMissileSwarm(Planet fromPlanet, Planet toPlanet, float numPlanetsReadyToFire) throws InvalidMissileException
 	{
-		MissileSwarm newMissileSwarm = new MissileSwarm(getUniqueMissileSwarmId(),fromPlanet,numPlanetsReadyToFire, fromPlanet.getDiameter()/2, fromPlanet.getPosition(), toPlanet.getPosition(), gameScene,vertexBufferObjectManager, gameTextureManager);
+		MissileSwarm newMissileSwarm = new MissileSwarm(getUniqueMissileSwarmId(),fromPlanet,numPlanetsReadyToFire, fromPlanet.getDiameter()/2, fromPlanet.getPosition(), toPlanet.getPosition(), gameScene,vertexBufferObjectManager);
 		m_missileSwarms.add(newMissileSwarm);
 		Log.d("MissileSystem","New Missile Swarm added id = "+newMissileSwarm.getId());
 	}

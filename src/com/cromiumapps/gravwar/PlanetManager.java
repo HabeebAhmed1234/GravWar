@@ -13,14 +13,12 @@ public class PlanetManager {
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	private GameScene gameScene;
 	private GameManager gameManager;
-	private GameTextureManager gameTextureManager;
 	
-	PlanetManager(ArrayList <Planet> planets, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager, GameTextureManager gameTextureManager)
+	PlanetManager(ArrayList <Planet> planets, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager)
 	{
 		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.gameScene = gameScene;
 		this.gameManager = gameManager;
-		this.gameTextureManager = gameTextureManager;
 		
 		Log.d("GravWar","PlanetManager - Constructor: number of planets to add is" + planets.size());
 		
@@ -36,9 +34,9 @@ public class PlanetManager {
 	public void addPlanet (float id, float x, float y, float diameter, PlanetType planetType)
 	{
 		Log.d("GravWar", "PlanetManager: adding new planet");
-		Planet newPlanet = new Planet (id,x,y,diameter,planetType, vertexBufferObjectManager, this.gameManager, this.gameScene, gameTextureManager);
+		Planet newPlanet = new Planet (id,x,y,diameter,planetType, vertexBufferObjectManager, this.gameManager, this.gameScene);
 		m_planets.add(newPlanet);
-		gameScene.attachChild(newPlanet.getSprite());
+		newPlanet.addToScene();
 		gameScene.registerTouchArea(newPlanet.getSprite());
 	}
 	

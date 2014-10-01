@@ -6,7 +6,10 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
@@ -24,7 +27,7 @@ public class Planet {
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	private GameScene gameScene;
 	private GameManager gameManager;
-	private GameTextureManager gametextureManager;
+	private Text healthText;
 	
 	//game stuff
 	private boolean isAddedToScreen = false;
@@ -44,20 +47,18 @@ public class Planet {
 		  , PlanetType planetType
 		  , VertexBufferObjectManager vertexBufferObjectManager
 		  , final GameManager gameManager
-		  , GameScene gameScene 
-		  , GameTextureManager gametextureManager)
+		  , GameScene gameScene )
 	{
 		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.gameScene = gameScene;
 		this.gameManager = gameManager;
-		this.gametextureManager = gametextureManager;
 		m_healthInMissiles = diameter/Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO;
 		m_diameter = diameter;
 		m_id = id;
 		m_planetType = planetType;
 		m_isSelected = false;
 		
-		ITiledTextureRegion planetTexture = gametextureManager.tiledPlanetTexture; 
+		ITiledTextureRegion planetTexture = GameResourceManager.tiledPlanetTexture; 
 		
 		m_planetSprite = new GameSprite(x,y,planetTexture,vertexBufferObjectManager,true){
 		    @Override
@@ -67,12 +68,12 @@ public class Planet {
 		    }
 		};
 
-		m_planetSprite.setCurrentTileIndex(GameTextureManager.NEUTRAL_PLANET_TEXTURE_INDEX);
-		if(m_planetType == PlanetType.PLANET_TYPE_ENEMY)m_planetSprite.setCurrentTileIndex(GameTextureManager.ENEMY_PLANET_TEXTURE_INDEX);
-		if(m_planetType == PlanetType.PLANET_TYPE_PLAYER)m_planetSprite.setCurrentTileIndex(GameTextureManager.PLAYER_PLANET_TEXTURE_INDEX);
+		m_planetSprite.setCurrentTileIndex(GameResourceManager.NEUTRAL_PLANET_TEXTURE_INDEX);
+		if(m_planetType == PlanetType.PLANET_TYPE_ENEMY)m_planetSprite.setCurrentTileIndex(GameResourceManager.ENEMY_PLANET_TEXTURE_INDEX);
+		if(m_planetType == PlanetType.PLANET_TYPE_PLAYER)m_planetSprite.setCurrentTileIndex(GameResourceManager.PLAYER_PLANET_TEXTURE_INDEX);
 		
 		m_planetSelectorSprite = new GameSprite(x, y,planetTexture,vertexBufferObjectManager,true);
-		m_planetSelectorSprite.setCurrentTileIndex(GameTextureManager.PLANET_SELECTOR_TEXTURE_INDEX);
+		m_planetSelectorSprite.setCurrentTileIndex(GameResourceManager.PLANET_SELECTOR_TEXTURE_INDEX);
 		
 		m_planetSprite.setUserData(m_id);
 		
@@ -168,6 +169,7 @@ public class Planet {
 			this.m_healthInMissiles = 0;
 		}
 		updateSprite();
+		updateHealthText();
 	}
 	
 	public void increaseHealth(float increase)
@@ -179,6 +181,7 @@ public class Planet {
 			this.m_healthInMissiles += increase;
 		}
 		updateSprite();
+		updateHealthText();
 	}
 	
 	public void convertTo(PlanetType planetTypeToConvertTo)
@@ -250,12 +253,28 @@ public class Planet {
 		isAddedToScreen = isAdded;
 	}
 	
+	public void addToScene(){
+		gameScene.attachChild(this.m_planetSprite);
+		initHealthText();
+	}
+	
+	private void initHealthText(){
+		healthText = new Text(0, 0, GameResourceManager.font, Integer.toString((int)Math.round(m_healthInMissiles)),5, this.vertexBufferObjectManager);
+	    this.gameScene.attachChild(healthText);
+	    healthText.setPosition(this.getPosition().getX(), this.getPosition().getY());
+	}
+	
+	private void updateHealthText(){
+		healthText.setText(Float.toString(m_healthInMissiles));
+	}
+	
 	private void updateSprite(){
-		this.m_diameter = m_healthInMissiles * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO;
-		this.m_planetSprite.setScale(((m_healthInMissiles)*Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO)/m_planetSprite.getWidth());
+		float fakeHealth = m_healthInMissiles+Constants.MINIMUM_PLANET_DIAMETER_IN_MISSILES; //this is just used for the purposes of rendering the sprite
+		this.m_diameter = (fakeHealth) * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO;
+		this.m_planetSprite.setScale(((fakeHealth)*Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO)/m_planetSprite.getWidth());
 
-		m_planetSprite.setCurrentTileIndex(GameTextureManager.NEUTRAL_PLANET_TEXTURE_INDEX);
-		if(m_planetType == PlanetType.PLANET_TYPE_ENEMY)m_planetSprite.setCurrentTileIndex(GameTextureManager.ENEMY_PLANET_TEXTURE_INDEX);
-		if(m_planetType == PlanetType.PLANET_TYPE_PLAYER)m_planetSprite.setCurrentTileIndex(GameTextureManager.PLAYER_PLANET_TEXTURE_INDEX);
+		m_planetSprite.setCurrentTileIndex(GameResourceManager.NEUTRAL_PLANET_TEXTURE_INDEX);
+		if(m_planetType == PlanetType.PLANET_TYPE_ENEMY)m_planetSprite.setCurrentTileIndex(GameResourceManager.ENEMY_PLANET_TEXTURE_INDEX);
+		if(m_planetType == PlanetType.PLANET_TYPE_PLAYER)m_planetSprite.setCurrentTileIndex(GameResourceManager.PLAYER_PLANET_TEXTURE_INDEX);
 	}
 }

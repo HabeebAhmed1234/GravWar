@@ -21,7 +21,6 @@ public class GameManager {
 	
 	//andengine objects
 	private GameCamera gameCamera;
-	private GameTextureManager gameTextTextureManager;
 	private GameAi gameAi;
 	private CollisionManager collisionManager;
 	private GameOutcomeListener gameOutcomeListener;
@@ -35,14 +34,13 @@ public class GameManager {
 	
 	public float numMissilesReadyToFire = 0;
 	
-	GameManager(GameOutcomeListener gameOutcomeListener, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameCamera gameCamera, GameTextureManager gameTextTextureManager)
+	GameManager(GameOutcomeListener gameOutcomeListener, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameCamera gameCamera)
 	{
 		this.gameOutcomeListener = gameOutcomeListener;
 		this.vertexBufferObjectManager =  vertexBufferObjectManager;
 		this.gameScene = gameScene;
 		this.gameCamera = gameCamera;
-		this.gameTextTextureManager = gameTextTextureManager;
-		this.missileSwarmManager = new MissileSwarmManager(gameScene, vertexBufferObjectManager, gameTextTextureManager);
+		this.missileSwarmManager = new MissileSwarmManager(gameScene, vertexBufferObjectManager);
 		this.collisionManager = new CollisionManager(this);
 		
 		generateLevel();
@@ -95,10 +93,10 @@ public class GameManager {
 	
 	public void generateLevel()
 	{
-		LevelGenerator levelGenerator = new LevelGenerator(gameCamera.getWidth(),gameCamera.getHeight(), this.vertexBufferObjectManager, this.gameScene, this, gameTextTextureManager);
+		LevelGenerator levelGenerator = new LevelGenerator(gameCamera.getWidth(),gameCamera.getHeight(), this.vertexBufferObjectManager, this.gameScene, this);
 		Level level = levelGenerator.generateLevel();
 		this.hud = new HUD(level.getPaths(),gameScene);
-		planetManager = new PlanetManager(level.getPlanets(),vertexBufferObjectManager, this.gameScene, this, this.gameTextTextureManager);
+		planetManager = new PlanetManager(level.getPlanets(),vertexBufferObjectManager, this.gameScene, this);
 	}
 	
 	public void resetGame()

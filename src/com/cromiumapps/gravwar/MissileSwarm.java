@@ -12,7 +12,7 @@ public class MissileSwarm {
 	private ArrayList <Missile> m_missiles;
 	private float m_id;
 	
-	MissileSwarm (float id,Planet fromPlanet, float numMissilesReadyToFire, float originPlanetRadius, Position origin, Position destination, GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager gameTextTextureManager) throws InvalidMissileException
+	MissileSwarm (float id,Planet fromPlanet, float numMissilesReadyToFire, float originPlanetRadius, Position origin, Position destination, GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager) throws InvalidMissileException
 	{
 		m_id = id;
 		m_missiles = new ArrayList<Missile>();
@@ -22,7 +22,7 @@ public class MissileSwarm {
 		
 		for(int i = 0 ; i < numMissilesReadyToFire ; i ++)
 		{
-			Missile newMissile = new Missile(Utilities.getMissileVectorFromAngle(theta),MissileIdRegistry.getUniqueMissileId(),fromPlanet,getValidOrigin(origin,destination,originPlanetRadius,theta),destination,vertexBufferObjectManager, gameTextTextureManager);
+			Missile newMissile = new Missile(Utilities.getMissileVectorFromAngle(theta),MissileIdRegistry.getUniqueMissileId(),fromPlanet,getValidOrigin(origin,destination,originPlanetRadius,theta),destination,vertexBufferObjectManager);
 			m_missiles.add(newMissile);
 			gameScene.attachChild(newMissile.getSprite());
 			Log.d(TAG,"New Missile added id = "+newMissile.getId());

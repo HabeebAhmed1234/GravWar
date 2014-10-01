@@ -26,7 +26,7 @@ public class Missile {
 	private float v_x = 3;
 	private float v_y = 3;
 	
-	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager, GameTextureManager textureManager) throws InvalidMissileException
+	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager) throws InvalidMissileException
 	{ 
 		m_id = id;
 		this.fromPlanetType = fromPlanet.getPlanetType();
@@ -37,7 +37,7 @@ public class Missile {
 		m_position = new Position(origin.getX(),origin.getY());
 		m_originPosition = new Position(origin.getX(),origin.getY());
 		m_destinationPosition = new Position(destination.getX(),destination.getY());
-		missileSprite = new GameSprite(m_position.getX(),m_position.getY(),textureManager.missileTexture,vertexBufferObjectManager,true);
+		missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.missileTexture,vertexBufferObjectManager,true);
 		missileSprite.setUserData(m_id);
 		m_currentAngle = Utilities.getVectorAngleFromComponents(v_x, v_y);
 		missileSprite.setAngle(m_currentAngle);

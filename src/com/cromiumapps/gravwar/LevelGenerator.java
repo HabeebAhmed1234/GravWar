@@ -18,7 +18,6 @@ public class LevelGenerator {
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	private GameScene gameScene;
 	private GameManager gameManager;
-	private GameTextureManager gametextureManager;
 	
 	private float m_screenHeight;
 	private float m_screenWidth;
@@ -28,12 +27,11 @@ public class LevelGenerator {
 	
 	
 	
-	LevelGenerator(float width, float height, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager, GameTextureManager gametextureManager)
+	LevelGenerator(float width, float height, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager)
 	{
 		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.gameScene = gameScene;
 		this.gameManager = gameManager;
-		this.gametextureManager = gametextureManager;
 		
 		m_screenHeight = height;
 		m_screenWidth = width;
@@ -70,7 +68,7 @@ public class LevelGenerator {
 		{
 			totalMissiles-=missilesPerPlanet;
 			//create new planet with null id since id is set by the planet manager
-			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_ENEMY, this.vertexBufferObjectManager, gameManager, gameScene, gametextureManager);
+			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_ENEMY, this.vertexBufferObjectManager, gameManager, gameScene);
 			Position pos = getLegalPosition(true,newEnemyPlanet.getDiameter());
 			newEnemyPlanet.setPosition((int)pos.getX(),(int)pos.getY());
 			m_levelPlanets.add(newEnemyPlanet);
@@ -84,7 +82,7 @@ public class LevelGenerator {
 		while(totalMissiles>0)
 		{
 			totalMissiles-=missilesPerPlanet;
-			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_PLAYER, vertexBufferObjectManager, gameManager,gameScene, gametextureManager);
+			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_PLAYER, vertexBufferObjectManager, gameManager,gameScene);
 			Position pos = getLegalPosition(false,newEnemyPlanet.getDiameter());
 			newEnemyPlanet.setPosition((int)pos.getX(),(int)pos.getY());
 			m_levelPlanets.add(newEnemyPlanet);
