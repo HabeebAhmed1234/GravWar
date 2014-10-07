@@ -37,11 +37,11 @@ public class Missile {
 		m_position = new Position(origin.getX(),origin.getY());
 		m_originPosition = new Position(origin.getX(),origin.getY());
 		m_destinationPosition = new Position(destination.getX(),destination.getY());
-		missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.missileTexture,vertexBufferObjectManager,true);
+		missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.getMissileTexture(fromPlanet.isPlayerPlanet()),vertexBufferObjectManager,true);
 		missileSprite.setUserData(m_id);
 		m_currentAngle = Utilities.getVectorAngleFromComponents(v_x, v_y);
 		missileSprite.setAngle(m_currentAngle);
-		
+		missileSprite.setScale(0.5f); 
 		Log.d("MissileSystem","added missile sprite of id = "+m_id);
 	}
 	
@@ -85,7 +85,7 @@ public class Missile {
 		this.m_currentAngle = missileSprite.getAngle();
 		float rotationDifference = Utilities.getVectorAngleFromPoints(m_position,m_destinationPosition).subtract(m_currentAngle.get());
 		 
-		if(rotationDifference > 0) 
+		if(rotationDifference > 0.05) 
 		{
 			if(Math.abs(rotationDifference)<Math.PI)
 			{
@@ -96,7 +96,7 @@ public class Missile {
 			}
 		}	
 		
-		if(rotationDifference < 0) 
+		if(rotationDifference < -0.05) 
 		{
 			if(Math.abs(rotationDifference)<Math.PI)
 			{

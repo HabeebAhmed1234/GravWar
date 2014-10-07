@@ -20,16 +20,23 @@ public class GameResourceManager {
 	public static final int PLANET_SELECTOR_TEXTURE_INDEX = 3;
 	public static final String FONT_FILE_PATH = "fnt/heavy_data.ttf";
 	public static final String PLANET_IMAGE_FILE_PATH = "Planet.png";
-	public static final String MISSILE_IMAGE_FILE_PATH = "Missile.png";
+	public static final String MISSILE_PLAYER_IMAGE_FILE_PATH = "Missile_Player.png";
+	public static final String MISSILE_ENEMY_IMAGE_FILE_PATH = "Missile_Enemy.png";
 	
 	public static ITiledTextureRegion tiledPlanetTexture; 
-	public static ITiledTextureRegion missileTexture;
+	public static ITiledTextureRegion missileTexturePlayer;
+	public static ITiledTextureRegion missileTextureEnemy;
 	
-	public static Font font;
+	public static Font font; 
 	
 	public static void loadAllResources(SimpleBaseGameActivity context){
 		GameResourceManager.loadTextures(context);
 		GameResourceManager.loadFonts(context);
+	}
+	
+	public static ITiledTextureRegion getMissileTexture(boolean isPlayerMissile){
+		if(isPlayerMissile) return missileTexturePlayer;
+		return missileTextureEnemy;
 	}
 	
 	private static void loadTextures(SimpleBaseGameActivity context)
@@ -39,13 +46,16 @@ public class GameResourceManager {
 		
 		Log.d(TAG, "loading planet texture");
 		ITiledTextureRegion TiledPlanetTexture = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas, context, PLANET_IMAGE_FILE_PATH, 0, 0, 2, 2);
-		Log.d(TAG, "loading Missile texture");
-		ITiledTextureRegion MissileTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas, context, MISSILE_IMAGE_FILE_PATH, 0, 920,1,1);
+		Log.d(TAG, "loading Missile Player texture");
+		ITiledTextureRegion MissilePlayerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas, context, MISSILE_PLAYER_IMAGE_FILE_PATH, 0, 920,1,1);
+		Log.d(TAG, "loading Missile Player texture");
+		ITiledTextureRegion MissileEnemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas, context, MISSILE_ENEMY_IMAGE_FILE_PATH, 33, 920,1,1);
 		Log.d(TAG, "BitmapTextureAtlas.load");
 		BitmapTextureAtlas.load(); 
 		
 		tiledPlanetTexture = TiledPlanetTexture;
-		missileTexture = MissileTextureRegion;
+		missileTexturePlayer = MissilePlayerTextureRegion;
+		missileTextureEnemy = MissileEnemyTextureRegion;
 	}
 	
 	private static void loadFonts(SimpleBaseGameActivity context){

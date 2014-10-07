@@ -35,8 +35,10 @@ public class HUD {
 	
 	public boolean isMovePermissible(Move move, PlanetManager planetManager)
 	{
-		if(planetManager.getPlanetByID(move.fromPlanetId).isNeutral())return false;
-		if(!planetManager.getPlanetByID(move.fromPlanetId).isEnemy() && move.isAiMove) return false;
+		Planet fromPlanet = planetManager.getPlanetByID(move.fromPlanetId);
+		if(fromPlanet.isNeutral())return false;
+		if(!fromPlanet.isEnemy() && move.isAiMove) return false;
+		
 		for(int i = 0 ; i< paths.size() ; i++)
 		{
 			Path path = paths.get(i);
