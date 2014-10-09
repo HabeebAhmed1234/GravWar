@@ -2,6 +2,7 @@ package com.cromiumapps.gravwar;
 
 import java.util.ArrayList;
 
+import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.util.Log;
@@ -22,7 +23,7 @@ public class MissileSwarm {
 		
 		for(int i = 0 ; i < numMissilesReadyToFire ; i ++)
 		{
-			Missile newMissile = new Missile(Utilities.getMissileVectorFromAngle(theta),MissileIdRegistry.getUniqueMissileId(),fromPlanet,getValidOrigin(origin,destination,originPlanetRadius,theta),destination,vertexBufferObjectManager);
+			Missile newMissile = new Missile(Utilities.getMissileVectorFromAngle(theta),MissileIdRegistry.getUniqueMissileId(),fromPlanet,getValidOrigin(origin,destination,originPlanetRadius,theta),destination,vertexBufferObjectManager, gameScene);
 			m_missiles.add(newMissile);
 			gameScene.attachChild(newMissile.getSprite());
 			Log.d(TAG,"New Missile added id = "+newMissile.getId());

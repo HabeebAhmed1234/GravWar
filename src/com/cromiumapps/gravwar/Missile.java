@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -15,20 +16,25 @@ import android.util.Log;
 public class Missile {
 	public static final String TAG = "Missile";
 	
+	private GameScene mGameScene;
+	
 	private Angle m_currentAngle = new Angle(0);
 	private Position m_position = new Position(0,0);
 	private Position m_originPosition = new Position(0,0);
 	private Position m_destinationPosition = new Position(0,0);
 	private GameSprite missileSprite;
+	private GameSprite mExplosionSprite;
+	private GameSprite mDockSprite;
 	private final PlanetType fromPlanetType;
 	private final float fromPlanetId;
 	private float m_id = 0;
 	private float v_x = 3;
 	private float v_y = 3;
 	
-	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager) throws InvalidMissileException
+	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene) throws InvalidMissileException
 	{ 
 		m_id = id;
+		mGameScene = gameScene;
 		this.fromPlanetType = fromPlanet.getPlanetType();
 		this.fromPlanetId = fromPlanet.getId();
 		if(fromPlanetType == PlanetType.PLANET_TYPE_NEUTRAL) throw new InvalidMissileException("origin planet is neutral");
@@ -37,7 +43,12 @@ public class Missile {
 		m_position = new Position(origin.getX(),origin.getY());
 		m_originPosition = new Position(origin.getX(),origin.getY());
 		m_destinationPosition = new Position(destination.getX(),destination.getY());
-		missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.getMissileTexture(fromPlanet.isPlayerPlanet()),vertexBufferObjectManager,true);
+
+        mExplosionSprite = new GameSprite(0, 0, GameResourceManager.getExplosionTextureRegion(), vertexBufferObjectManager, true);
+        mExplosionSprite.setScale(0.2f);
+        mDockSprite = new GameSprite(0, 0, GameResourceManager.getDockTextureRegion(fromPlanet.isEnemy()), vertexBufferObjectManager, true);
+        mDockSprite.setScale(0.5f);
+        missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.getMissileTexture(fromPlanet.isPlayerPlanet()),vertexBufferObjectManager,true);
 		missileSprite.setUserData(m_id);
 		m_currentAngle = Utilities.getVectorAngleFromComponents(v_x, v_y);
 		missileSprite.setAngle(m_currentAngle);
@@ -125,11 +136,19 @@ public class Missile {
 	
 	public void explode()
 	{
+		mExplosionSprite.animate(100);
+		mExplosionSprite.setPosition(missileSprite.getX(), missileSprite.getY());
+		mExplosionSprite.setRotation((float) (missileSprite.getRotation()+Math.PI));
+		mGameScene.attachChild(mExplosionSprite);
 		missileSprite.detachSelf();
 	}
 	
 	public void dock()
 	{
+		mDockSprite.animate(100);
+		mDockSprite.setPosition(missileSprite.getX(), missileSprite.getY());
+		mDockSprite.setRotation(missileSprite.getRotation());
+		mGameScene.attachChild(mDockSprite);
 		missileSprite.detachSelf();
 	}
 }

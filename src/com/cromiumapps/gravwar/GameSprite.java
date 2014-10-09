@@ -1,18 +1,15 @@
 package com.cromiumapps.gravwar;
 
-import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.sprite.TiledSprite;
-import org.andengine.entity.sprite.vbo.ISpriteVertexBufferObject;
-import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.math.MathUtils;
 
-public class GameSprite extends TiledSprite  {
+public class GameSprite extends AnimatedSprite  {
 	//private boolean isCoordinateCenterInCenter = false;
 	
-	public GameSprite(float x, float y, ITiledTextureRegion  missileTexture,VertexBufferObjectManager vertexBufferObjectManager,boolean isCoordinateCenterInCenter) {
-		super(x, y, missileTexture,vertexBufferObjectManager);
+	public GameSprite(float x, float y, ITiledTextureRegion  texture,VertexBufferObjectManager vertexBufferObjectManager,boolean isCoordinateCenterInCenter) {
+		super(x, y, texture,vertexBufferObjectManager);
 	}
 	
 	public void setAngle(Angle a)
