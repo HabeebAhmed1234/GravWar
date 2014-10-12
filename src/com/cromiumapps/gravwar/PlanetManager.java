@@ -2,6 +2,7 @@ package com.cromiumapps.gravwar;
 
 import java.util.ArrayList;
 
+import org.andengine.engine.Engine;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.cromiumapps.gravwar.Planet.PlanetType;
@@ -13,12 +14,14 @@ public class PlanetManager {
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	private GameScene gameScene;
 	private GameManager gameManager;
+	private Engine mEngine;
 	
-	PlanetManager(ArrayList <Planet> planets, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager)
+	PlanetManager(ArrayList <Planet> planets, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager)
 	{
 		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.gameScene = gameScene;
 		this.gameManager = gameManager;
+		this.mEngine = engine;
 		
 		Log.d("GravWar","PlanetManager - Constructor: number of planets to add is" + planets.size());
 		
@@ -34,7 +37,7 @@ public class PlanetManager {
 	public void addPlanet (float id, float x, float y, float diameter, PlanetType planetType)
 	{
 		Log.d("GravWar", "PlanetManager: adding new planet");
-		Planet newPlanet = new Planet (id,x,y,diameter,planetType, vertexBufferObjectManager, this.gameManager, this.gameScene);
+		Planet newPlanet = new Planet (id,x,y,diameter,planetType, mEngine, vertexBufferObjectManager, this.gameManager, this.gameScene);
 		m_planets.add(newPlanet);
 		newPlanet.addToScene();
 		gameScene.registerTouchArea(newPlanet.getSprite());

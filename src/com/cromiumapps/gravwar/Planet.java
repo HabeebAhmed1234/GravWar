@@ -5,6 +5,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import org.andengine.engine.Engine;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
@@ -45,6 +46,7 @@ public class Planet {
 		  , float y
 		  , float diameter
 		  , PlanetType planetType
+		  , Engine engine
 		  , VertexBufferObjectManager vertexBufferObjectManager
 		  , final GameManager gameManager
 		  , GameScene gameScene )
@@ -60,7 +62,7 @@ public class Planet {
 		
 		ITiledTextureRegion planetTexture = GameResourceManager.tiledPlanetTexture; 
 		
-		m_planetSprite = new GameSprite(x,y,planetTexture,vertexBufferObjectManager,true){
+		m_planetSprite = new GameSprite(x,y,planetTexture, vertexBufferObjectManager,true,engine){
 		    @Override
 		    public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 		    	if(pSceneTouchEvent.isActionUp())gameManager.onTouchPlanet(pSceneTouchEvent,(Float) (this.getUserData()));
@@ -72,12 +74,12 @@ public class Planet {
 		if(m_planetType == PlanetType.PLANET_TYPE_ENEMY)m_planetSprite.setCurrentTileIndex(GameResourceManager.ENEMY_PLANET_TEXTURE_INDEX);
 		if(m_planetType == PlanetType.PLANET_TYPE_PLAYER)m_planetSprite.setCurrentTileIndex(GameResourceManager.PLAYER_PLANET_TEXTURE_INDEX);
 		
-		m_planetSelectorSprite = new GameSprite(x, y,planetTexture,vertexBufferObjectManager,true);
+		m_planetSelectorSprite = new GameSprite(x, y,planetTexture, vertexBufferObjectManager,true,engine);
 		m_planetSelectorSprite.setCurrentTileIndex(GameResourceManager.PLANET_SELECTOR_TEXTURE_INDEX);
 		
 		m_planetSprite.setUserData(m_id);
 		
-		m_planetSprite.setScale(m_diameter/m_planetSprite.getWidth());
+		m_planetSprite.setScaleSmooth(m_diameter/m_planetSprite.getWidth());
 		m_planetSelectorSprite.setScale(m_planetSprite.getScaleX()+0.1f);
 		
 		Log.d("PositionSet","final planet position +++++++++ "+this.getId()+" at position "+this.getPosition().getX()+","+this.getPosition().getX());
@@ -240,7 +242,12 @@ public class Planet {
 	
 	public void update()
 	{
+		updatePlanetSmoothMotion();
 		updatePlanetSelectorRotation();
+	}
+	
+	private void updatePlanetSmoothMotion(){
+		
 	}
 	
 	private void updatePlanetSelectorRotation()
@@ -271,7 +278,7 @@ public class Planet {
 	private void updateSprite(){
 		float fakeHealth = m_healthInMissiles+Constants.MINIMUM_PLANET_DIAMETER_IN_MISSILES; //this is just used for the purposes of rendering the sprite
 		this.m_diameter = (fakeHealth) * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO;
-		this.m_planetSprite.setScale(((fakeHealth)*Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO)/m_planetSprite.getWidth());
+		this.m_planetSprite.setScaleSmooth(((fakeHealth)*Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO)/m_planetSprite.getWidth());
 
 		m_planetSprite.setCurrentTileIndex(GameResourceManager.NEUTRAL_PLANET_TEXTURE_INDEX);
 		if(m_planetType == PlanetType.PLANET_TYPE_ENEMY)m_planetSprite.setCurrentTileIndex(GameResourceManager.ENEMY_PLANET_TEXTURE_INDEX);

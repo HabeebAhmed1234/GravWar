@@ -57,7 +57,7 @@ public class MainActivity extends SimpleBaseGameActivity implements IOnSceneTouc
 	@Override
 	public EngineOptions onCreateEngineOptions() {
 		gameCamera = new GameCamera(this);
-		return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), gameCamera);
+		return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(GameCamera.desiredWidth/GameCamera.desiredHeight), gameCamera);
 	}
 	
 	@Override
@@ -81,6 +81,7 @@ public class MainActivity extends SimpleBaseGameActivity implements IOnSceneTouc
 		GameResourceManager.loadAllResources(this);
 		
 		gameManager = new GameManager(gameOutcomeListener,
+									  mEngine,
 									  vertexBufferObjectManager, 
 									  gameScene, 
 									  camera);

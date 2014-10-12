@@ -96,7 +96,12 @@ public class GameAi {
             	return 0;
             }
         });
-		return movesArray[movesArray.length-1];
+		 
+		if(movesArray.length > 0){
+			return movesArray[0];
+		}else{
+			return null;
+		}
 	}
 	
 	/*private void computeMoves()

@@ -1,22 +1,18 @@
 package com.cromiumapps.gravwar;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-
-import org.andengine.entity.sprite.AnimatedSprite;
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.engine.Engine;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-
 import com.cromiumapps.gravwar.Planet.PlanetType;
 
-import android.opengl.GLES20;
 import android.util.Log;
 
 public class Missile {
 	public static final String TAG = "Missile";
+	public static final float MISSILE_SCALE = 0.3f;
+	public static final float EXPLOSION_SCALE = 0.2f;
 	
 	private GameScene mGameScene;
+	private Engine mEngine;
 	
 	private Angle m_currentAngle = new Angle(0);
 	private Position m_position = new Position(0,0);
@@ -31,10 +27,11 @@ public class Missile {
 	private float v_x = 3;
 	private float v_y = 3;
 	
-	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene) throws InvalidMissileException
+	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene) throws InvalidMissileException
 	{ 
 		m_id = id;
 		mGameScene = gameScene;
+		mEngine = engine;
 		this.fromPlanetType = fromPlanet.getPlanetType();
 		this.fromPlanetId = fromPlanet.getId();
 		if(fromPlanetType == PlanetType.PLANET_TYPE_NEUTRAL) throw new InvalidMissileException("origin planet is neutral");
@@ -44,15 +41,15 @@ public class Missile {
 		m_originPosition = new Position(origin.getX(),origin.getY());
 		m_destinationPosition = new Position(destination.getX(),destination.getY());
 
-        mExplosionSprite = new GameSprite(0, 0, GameResourceManager.getExplosionTextureRegion(), vertexBufferObjectManager, true);
-        mExplosionSprite.setScale(0.2f);
-        mDockSprite = new GameSprite(0, 0, GameResourceManager.getDockTextureRegion(fromPlanet.isEnemy()), vertexBufferObjectManager, true);
-        mDockSprite.setScale(0.5f);
-        missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.getMissileTexture(fromPlanet.isPlayerPlanet()),vertexBufferObjectManager,true);
+        mExplosionSprite = new GameSprite(0, 0, GameResourceManager.getExplosionTextureRegion(), vertexBufferObjectManager, true,mEngine);
+        mExplosionSprite.setScale(EXPLOSION_SCALE);
+        mDockSprite = new GameSprite(0, 0, GameResourceManager.getDockTextureRegion(fromPlanet.isEnemy()), vertexBufferObjectManager, true,mEngine);
+        mDockSprite.setScale(MISSILE_SCALE);
+        missileSprite = new GameSprite(m_position.getX(),m_position.getY(),GameResourceManager.getMissileTexture(fromPlanet.isPlayerPlanet()),vertexBufferObjectManager,true,mEngine);
 		missileSprite.setUserData(m_id);
 		m_currentAngle = Utilities.getVectorAngleFromComponents(v_x, v_y);
 		missileSprite.setAngle(m_currentAngle);
-		missileSprite.setScale(0.5f); 
+		missileSprite.setScale(MISSILE_SCALE); 
 		Log.d("MissileSystem","added missile sprite of id = "+m_id);
 	}
 	
@@ -136,7 +133,7 @@ public class Missile {
 	
 	public void explode()
 	{
-		mExplosionSprite.animate(100);
+		mExplosionSprite.animate(100,true);
 		mExplosionSprite.setPosition(missileSprite.getX(), missileSprite.getY());
 		mExplosionSprite.setRotation((float) (missileSprite.getRotation()+Math.PI));
 		mGameScene.attachChild(mExplosionSprite);
@@ -145,7 +142,7 @@ public class Missile {
 	
 	public void dock()
 	{
-		mDockSprite.animate(100);
+		mDockSprite.animate(100, true);
 		mDockSprite.setPosition(missileSprite.getX(), missileSprite.getY());
 		mDockSprite.setRotation(missileSprite.getRotation());
 		mGameScene.attachChild(mDockSprite);

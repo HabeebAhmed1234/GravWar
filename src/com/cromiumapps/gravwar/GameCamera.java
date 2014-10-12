@@ -12,9 +12,10 @@ import android.view.Display;
 
 public class GameCamera extends Camera {
 	public static final int FPS = 30; 
+	public static float GAME_SCALING_FACTOR = 1;
 	
-	private static float desiredWidth = 480;
-	private static float desiredHeight = 800;
+	public static float desiredWidth = 450;
+	public static float desiredHeight = 800;
 	
 	private Activity context;
 	
@@ -24,7 +25,8 @@ public class GameCamera extends Camera {
 		setScreenSize();
 	}
 
-	@SuppressLint("NewApi") private void setScreenSize()
+	@SuppressLint("NewApi")
+	private void setScreenSize()
 	{
 		int width = 0;
 		int height = 0;
@@ -51,7 +53,7 @@ public class GameCamera extends Camera {
 			width=display.getWidth();
 			height = display.getHeight();
 		}
-		
+		GAME_SCALING_FACTOR = (desiredWidth + desiredHeight) / (width + height);
 		desiredWidth= width;
 		desiredHeight = height;
 	}

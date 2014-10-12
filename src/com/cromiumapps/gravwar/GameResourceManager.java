@@ -53,7 +53,7 @@ public class GameResourceManager {
 		return explosionTextures.get(index);
 	}
 	
-	public static ITiledTextureRegion getDockTextureRegion(boolean isEnemy){
+	public static ITiledTextureRegion getDockTextureRegion(boolean isEnemy){ 
 		if(isEnemy) return enemyDockTexture;
 		return playerDockTexture;
 	}

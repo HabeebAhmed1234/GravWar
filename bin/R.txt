@@ -148,11 +148,13 @@ int color lime 0x7f04000a
 int color maroon 0x7f040008
 int color navy 0x7f04000e
 int color olive 0x7f040006
+int color pitch_black 0x7f04009d
 int color purple 0x7f040007
 int color red 0x7f040003
 int color silver 0x7f040004
 int color teal 0x7f04000b
 int color white 0x7f040000
+int color white_opaque 0x7f04009c
 int color yellow 0x7f040001
 int dimen activity_horizontal_margin 0x7f050000
 int dimen activity_vertical_margin 0x7f050001
@@ -182,5 +184,5 @@ int string quickgamebuttonlabel 0x7f060008
 int string restartbuttonlabel 0x7f060007
 int string title_activity_game_finished 0x7f060004
 int string title_activity_main_menu 0x7f060005
-int style AppBaseTheme 0x7f070000
-int style AppTheme 0x7f070001
+int style AppBaseTheme 0x7f070001
+int style AppTheme 0x7f070000

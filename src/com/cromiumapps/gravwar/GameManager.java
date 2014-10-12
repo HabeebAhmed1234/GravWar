@@ -1,5 +1,6 @@
 package com.cromiumapps.gravwar;
 
+import org.andengine.engine.Engine;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.input.touch.TouchEvent;
@@ -31,16 +32,18 @@ public class GameManager {
 	public PlanetManager planetManager;
 	public MissileSwarmManager missileSwarmManager;
 	public GameScene gameScene;
+	public Engine mEngine;
 	
 	public float numMissilesReadyToFire = 0;
 	
-	GameManager(GameOutcomeListener gameOutcomeListener, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameCamera gameCamera)
+	GameManager(GameOutcomeListener gameOutcomeListener, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameCamera gameCamera)
 	{
 		this.gameOutcomeListener = gameOutcomeListener;
+		this.mEngine = engine;
 		this.vertexBufferObjectManager =  vertexBufferObjectManager;
 		this.gameScene = gameScene;
 		this.gameCamera = gameCamera;
-		this.missileSwarmManager = new MissileSwarmManager(gameScene, vertexBufferObjectManager);
+		this.missileSwarmManager = new MissileSwarmManager(gameScene, mEngine, vertexBufferObjectManager);
 		this.collisionManager = new CollisionManager(this);
 		
 		generateLevel();
@@ -93,10 +96,10 @@ public class GameManager {
 	
 	public void generateLevel()
 	{
-		LevelGenerator levelGenerator = new LevelGenerator(gameCamera.getWidth(),gameCamera.getHeight(), this.vertexBufferObjectManager, this.gameScene, this);
+		LevelGenerator levelGenerator = new LevelGenerator(gameCamera.getWidth(),gameCamera.getHeight(), mEngine, this.vertexBufferObjectManager, this.gameScene, this);
 		Level level = levelGenerator.generateLevel();
 		this.hud = new HUD(level.getPaths(),gameScene);
-		planetManager = new PlanetManager(level.getPlanets(),vertexBufferObjectManager, this.gameScene, this);
+		planetManager = new PlanetManager(level.getPlanets(), mEngine, vertexBufferObjectManager, this.gameScene, this);
 	}
 	
 	public void resetGame()

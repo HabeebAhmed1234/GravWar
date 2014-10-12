@@ -23,7 +23,7 @@ public class HUD {
 		renderPaths();
 	}
 	
-	public void renderPaths()
+	public void renderPaths() 
 	{
 		Log.d("GravWar","HUD: rendering paths");
 		for(int i =0 ;i<paths.size();i++)

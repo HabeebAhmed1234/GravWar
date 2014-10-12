@@ -161,11 +161,13 @@ public final class R {
         public static final int maroon=0x7f040008;
         public static final int navy=0x7f04000e;
         public static final int olive=0x7f040006;
+        public static final int pitch_black=0x7f04009d;
         public static final int purple=0x7f040007;
         public static final int red=0x7f040003;
         public static final int silver=0x7f040004;
         public static final int teal=0x7f04000b;
         public static final int white=0x7f040000;
+        public static final int white_opaque=0x7f04009c;
         public static final int yellow=0x7f040001;
     }
     public static final class dimen {
@@ -216,15 +218,6 @@ public final class R {
     }
     public static final class style {
         /** 
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
-
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
     
@@ -236,10 +229,7 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
-        /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
-         */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppBaseTheme=0x7f070001;
+        public static final int AppTheme=0x7f070000;
     }
 }

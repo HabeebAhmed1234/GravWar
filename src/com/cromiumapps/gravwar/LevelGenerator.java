@@ -3,6 +3,7 @@ package com.cromiumapps.gravwar;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import org.andengine.engine.Engine;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.cromiumapps.gravwar.Planet.PlanetType;
@@ -17,6 +18,7 @@ public class LevelGenerator {
 	
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	private GameScene gameScene;
+	private Engine mEngine;
 	private GameManager gameManager;
 	
 	private float m_screenHeight;
@@ -27,10 +29,11 @@ public class LevelGenerator {
 	
 	
 	
-	LevelGenerator(float width, float height, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager)
+	LevelGenerator(float width, float height, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameManager gameManager)
 	{
 		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		this.gameScene = gameScene;
+		this.mEngine = engine;
 		this.gameManager = gameManager;
 		
 		m_screenHeight = height;
@@ -68,7 +71,7 @@ public class LevelGenerator {
 		{
 			totalMissiles-=missilesPerPlanet;
 			//create new planet with null id since id is set by the planet manager
-			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_ENEMY, this.vertexBufferObjectManager, gameManager, gameScene);
+			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_ENEMY, mEngine, this.vertexBufferObjectManager, gameManager, gameScene);
 			Position pos = getLegalPosition(true,newEnemyPlanet.getDiameter());
 			newEnemyPlanet.setPosition((int)pos.getX(),(int)pos.getY());
 			m_levelPlanets.add(newEnemyPlanet);
@@ -82,7 +85,7 @@ public class LevelGenerator {
 		while(totalMissiles>0)
 		{
 			totalMissiles-=missilesPerPlanet;
-			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_PLAYER, vertexBufferObjectManager, gameManager,gameScene);
+			Planet newEnemyPlanet = new Planet(getUniquePlanetId(), 0, 0, missilesPerPlanet * Constants.PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO, PlanetType.PLANET_TYPE_PLAYER, mEngine, vertexBufferObjectManager, gameManager,gameScene);
 			Position pos = getLegalPosition(false,newEnemyPlanet.getDiameter());
 			newEnemyPlanet.setPosition((int)pos.getX(),(int)pos.getY());
 			m_levelPlanets.add(newEnemyPlanet);

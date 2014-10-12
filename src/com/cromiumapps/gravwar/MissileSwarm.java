@@ -2,7 +2,7 @@ package com.cromiumapps.gravwar;
 
 import java.util.ArrayList;
 
-import org.andengine.entity.scene.Scene;
+import org.andengine.engine.Engine;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.util.Log;
@@ -13,7 +13,7 @@ public class MissileSwarm {
 	private ArrayList <Missile> m_missiles;
 	private float m_id;
 	
-	MissileSwarm (float id,Planet fromPlanet, float numMissilesReadyToFire, float originPlanetRadius, Position origin, Position destination, GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager) throws InvalidMissileException
+	MissileSwarm (float id,Planet fromPlanet, float numMissilesReadyToFire, float originPlanetRadius, Position origin, Position destination, GameScene gameScene, Engine engine, VertexBufferObjectManager vertexBufferObjectManager) throws InvalidMissileException
 	{
 		m_id = id;
 		m_missiles = new ArrayList<Missile>();
@@ -23,7 +23,7 @@ public class MissileSwarm {
 		
 		for(int i = 0 ; i < numMissilesReadyToFire ; i ++)
 		{
-			Missile newMissile = new Missile(Utilities.getMissileVectorFromAngle(theta),MissileIdRegistry.getUniqueMissileId(),fromPlanet,getValidOrigin(origin,destination,originPlanetRadius,theta),destination,vertexBufferObjectManager, gameScene);
+			Missile newMissile = new Missile(Utilities.getMissileVectorFromAngle(theta),MissileIdRegistry.getUniqueMissileId(),fromPlanet,getValidOrigin(origin,destination,originPlanetRadius,theta),destination,engine,vertexBufferObjectManager, gameScene);
 			m_missiles.add(newMissile);
 			gameScene.attachChild(newMissile.getSprite());
 			Log.d(TAG,"New Missile added id = "+newMissile.getId());
