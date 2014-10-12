@@ -9,7 +9,14 @@
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="gametitle">GravWar</string>
     <string name="restartbuttonlabel">Restart</string>
+    
     <string name="quickgamebuttonlabel">Quick Game</string>
+    <string name="settingsbuttonlabel">Settings</string>
+    
+    <string name="easybuttonlabel">Easy</string>
+    <string name="normalbuttonlabel">Normal</string>
+    <string name="hardbuttonlabel">Hard</string>
+    
     <string name="mainmenubuttonlabel">Main Menu</string>
     <string name="outcometextlabel">Outcome</string>
 

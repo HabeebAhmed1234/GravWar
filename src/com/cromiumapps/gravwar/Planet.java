@@ -79,7 +79,7 @@ public class Planet {
 		
 		m_planetSprite.setUserData(m_id);
 		
-		m_planetSprite.setScaleSmooth(m_diameter/m_planetSprite.getWidth());
+		m_planetSprite.setScale(m_diameter/m_planetSprite.getWidth());
 		m_planetSelectorSprite.setScale(m_planetSprite.getScaleX()+0.1f);
 		
 		Log.d("PositionSet","final planet position +++++++++ "+this.getId()+" at position "+this.getPosition().getX()+","+this.getPosition().getX());

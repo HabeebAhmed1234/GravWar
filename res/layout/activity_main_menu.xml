@@ -1,27 +1,169 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="30sp"
     tools:context=".MainMenuActivity" >
 
     <TextView
         android:id="@+id/gametitletext"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50sp"
+        android:paddingBottom="20sp"
+        android:textColor="@color/White"
+        android:textSize="70sp"
+        android:gravity="center"
         android:text="@string/gametitle" />
     
-    <Button 
-        android:id="@+id/quickgamebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/gametitletext"
-        android:layout_marginTop="80sp"
-        android:text="@string/quickgamebuttonlabel"
-        />
+    <LinearLayout
+	    android:id="@+id/quickgamebutton"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+       	android:gravity="center"
+	    android:orientation="horizontal" >
+	
+		<TextView
+	        android:id="@+id/quickgamebuttontext"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:textSize="45sp"
+        	android:textColor="@color/White"
+        	android:layout_marginRight="10sp"
+	        android:text="@string/quickgamebuttonlabel"/> 
+		
+		<ImageView
+		    android:id="@+id/playgameimage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:adjustViewBounds="true"  
+			android:maxWidth="20dp"  
+			android:maxHeight="20dp"   
+		    android:scaleType="fitCenter"  
+		    android:src="@drawable/play_btn"/>
+	
+    </LinearLayout>   
     
+    <LinearLayout
+	    android:id="@+id/settingsbutton"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+       	android:gravity="center"
+	    android:orientation="horizontal" >
+	
+		<TextView
+	        android:id="@+id/settingsbuttontext"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:textSize="45sp"
+        	android:textColor="@color/White"
+        	android:layout_marginRight="10sp"
+	        android:text="@string/settingsbuttonlabel"/> 
+		
+		<ImageView
+		    android:id="@+id/settingsbuttonimage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:adjustViewBounds="true"  
+			android:maxWidth="20dp"  
+			android:maxHeight="20dp"   
+		    android:scaleType="fitCenter"  
+		    android:src="@drawable/settings_btn"/>
+    </LinearLayout>  
+	
+   	<LinearLayout
+	    android:id="@+id/difficultysettingsframe"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+       	android:gravity="center"
+       	android:visibility="gone"
+	    android:orientation="vertical" >	
+	    
+		<LinearLayout
+		    android:id="@+id/easybutton"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+	       	android:gravity="center"
+		    android:orientation="horizontal" >
+		
+			<TextView
+		        android:id="@+id/easybuttontext"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	        	android:textSize="35sp"
+	        	android:textColor="@color/White"
+	        	android:layout_marginRight="10sp"
+		        android:text="@string/easybuttonlabel"/> 
+			
+			<ImageView
+			    android:id="@+id/easybuttonimage"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				android:adjustViewBounds="true"  
+				android:maxWidth="20dp"  
+				android:maxHeight="20dp"   
+			    android:scaleType="fitCenter"  
+			    android:src="@drawable/easy_btn"/> 
+		
+	    </LinearLayout> 
+	    
+		<LinearLayout
+		    android:id="@+id/normalbutton"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+	       	android:gravity="center"
+		    android:orientation="horizontal" >
+		
+			<TextView
+		        android:id="@+id/normalbuttontext"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	        	android:textSize="35sp"
+	        	android:textColor="@color/White"
+	        	android:layout_marginRight="10sp"
+		        android:text="@string/normalbuttonlabel"/> 
+			
+			<ImageView
+			    android:id="@+id/normalbuttonimage"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				android:adjustViewBounds="true"  
+				android:maxWidth="20dp"  
+				android:maxHeight="20dp"   
+			    android:scaleType="fitCenter"  
+			    android:src="@drawable/normal_btn"/> 
+		
+	    </LinearLayout> 
+	    
+		<LinearLayout
+		    android:id="@+id/hardbutton"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+	       	android:gravity="center"
+		    android:orientation="horizontal" >
+		
+			<TextView
+		        android:id="@+id/hardbuttontext"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	        	android:textSize="35sp"
+	        	android:textColor="@color/White"
+	        	android:layout_marginRight="10sp"
+		        android:text="@string/easybuttonlabel"/> 
+			
+			<ImageView
+			    android:id="@+id/hardbuttonimage"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				android:adjustViewBounds="true"  
+				android:maxWidth="20dp"  
+				android:maxHeight="20dp"   
+			    android:scaleType="fitCenter"  
+			    android:src="@drawable/hard_btn"/> 
+		
+	    </LinearLayout>
+     
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

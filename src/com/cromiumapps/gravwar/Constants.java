@@ -25,7 +25,7 @@ public class Constants {
 	public static final float PLANET_HEALTH_PER_MISSILE = 1;
 	public static final float PLANET_MISSILE_REGENERATION_AMMOUNT = 1;
 	public static final float PLANET_MAX_HEALTH = 15;
-	public static final float MINIMUM_PLANET_DIAMETER_IN_MISSILES = 4;
+	public static final float MINIMUM_PLANET_DIAMETER_IN_MISSILES = 7;
 	
 	//missile constants
 	public static final float MISSILE_PLANET_TO_MISSILE_GAP = 40;
