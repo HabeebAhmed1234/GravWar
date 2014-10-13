@@ -1,6 +1,9 @@
 package com.cromiumapps.gravwar;
 
+import com.cromiumapps.gravwar.PreferencesManager.Difficulty;
+
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +17,15 @@ import cromiumapps.gravwar.R;
 
 public class MainMenuActivity extends Activity implements OnClickListener{
 	LinearLayout difficultysettingsframe;
+	
+	TextView titleText;
+	LinearLayout quickGameButton;
+	LinearLayout settingsButton;
+	
+	LinearLayout easyButton;
+	LinearLayout normalButton;
+	LinearLayout hardButton;
+	LinearLayout exitButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +44,22 @@ public class MainMenuActivity extends Activity implements OnClickListener{
 	}
 	
 	private void initViews()
-	{
+	{  
 		//get views
-		TextView titleText = (TextView)findViewById(R.id.gametitletext);
+		titleText = (TextView)findViewById(R.id.gametitletext);
 	    TextView quickGameText = (TextView)findViewById(R.id.quickgamebuttontext);
 	    TextView settingsText = (TextView)findViewById(R.id.settingsbuttontext);
 	    TextView easyText = (TextView)findViewById(R.id.easybuttontext);
 	    TextView mediumText = (TextView)findViewById(R.id.normalbuttontext);
 	    TextView hardText = (TextView)findViewById(R.id.hardbuttontext);
+	    TextView exitText = (TextView)findViewById(R.id.easybuttontext);
 	    
-	    LinearLayout quickGameButton = (LinearLayout)findViewById(R.id.quickgamebutton);
-	    LinearLayout settingsButton = (LinearLayout)findViewById(R.id.settingsbutton);
-	    LinearLayout easyButton = (LinearLayout)findViewById(R.id.easybutton);
-	    LinearLayout normalButton = (LinearLayout)findViewById(R.id.normalbutton);
-	    LinearLayout hardButton = (LinearLayout)findViewById(R.id.hardbutton);
+	    quickGameButton = (LinearLayout)findViewById(R.id.quickgamebutton);
+	    settingsButton = (LinearLayout)findViewById(R.id.settingsbutton);
+	    easyButton = (LinearLayout)findViewById(R.id.easybutton);
+	    normalButton = (LinearLayout)findViewById(R.id.normalbutton);
+	    hardButton = (LinearLayout)findViewById(R.id.hardbutton);
+	    exitButton = (LinearLayout)findViewById(R.id.exitbutton);
 	    
 	    difficultysettingsframe = (LinearLayout) findViewById(R.id.difficultysettingsframe);
 	    
@@ -55,6 +69,7 @@ public class MainMenuActivity extends Activity implements OnClickListener{
 	    easyButton.setOnClickListener(this);
 	    normalButton.setOnClickListener(this);
 	    hardButton.setOnClickListener(this);
+	    exitButton.setOnClickListener(this);
 	    
 	    //fonts
 	    titleText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
@@ -63,11 +78,11 @@ public class MainMenuActivity extends Activity implements OnClickListener{
 	    easyText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
 	    mediumText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
 	    hardText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
+	    exitText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
 	    
-	    //animations
-	    titleText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in));
-	    quickGameButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in));
-	    settingsButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in));
+	    //set difficuly selection
+	    Difficulty difficulty = PreferencesManager.getInstance(this).getDifficulty();
+	    setDifficultySettingsBackgroundColor(difficulty);
 	}
 
 	@Override
@@ -83,6 +98,40 @@ public class MainMenuActivity extends Activity implements OnClickListener{
 			}else{
 				difficultysettingsframe.setVisibility(LinearLayout.VISIBLE);
 			}
+		}
+		
+		if(v.getId() == R.id.exitbutton){
+			finish();
+		}
+		
+		if(v.getId() == R.id.easybutton){
+			PreferencesManager.getInstance(this).setDifficulty(Difficulty.EASY);
+			setDifficultySettingsBackgroundColor(Difficulty.EASY);
+		}
+
+		if(v.getId() == R.id.normalbutton){
+			PreferencesManager.getInstance(this).setDifficulty(Difficulty.NORMAL);
+			setDifficultySettingsBackgroundColor(Difficulty.NORMAL);
+		}
+		
+		if(v.getId() == R.id.hardbutton){
+			PreferencesManager.getInstance(this).setDifficulty(Difficulty.HARD);
+			setDifficultySettingsBackgroundColor(Difficulty.HARD);			
+		}
+	}
+	
+	private void setDifficultySettingsBackgroundColor(Difficulty difficulty){
+		easyButton.setBackgroundResource(R.color.Black);
+		normalButton.setBackgroundResource(R.color.Black);
+		hardButton.setBackgroundResource(R.color.Black);
+		if(difficulty == null) return;
+		
+		if(difficulty == Difficulty.EASY){
+			easyButton.setBackgroundResource(R.color.Red);
+		}else if(difficulty == difficulty.NORMAL){
+			normalButton.setBackgroundResource(R.color.Red);			
+		}else if(difficulty == Difficulty.HARD){
+			hardButton.setBackgroundResource(R.color.Red);			
 		}
 	}
 }

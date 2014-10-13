@@ -12,6 +12,7 @@
     
     <string name="quickgamebuttonlabel">Quick Game</string>
     <string name="settingsbuttonlabel">Settings</string>
+    <string name="exitbuttonlabel">Exit</string>
     
     <string name="easybuttonlabel">Easy</string>
     <string name="normalbuttonlabel">Normal</string>
