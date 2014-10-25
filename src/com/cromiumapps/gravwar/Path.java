@@ -27,4 +27,9 @@ public class Path {
 		return this.pathLine;
 	}
 	
+	public boolean isIncidentTo(Planet a, Planet b){
+		if(planetA.getId() == a.getId() && planetB.getId() == b.getId() || 
+		   planetB.getId() == a.getId() && planetA.getId() == b.getId()) return true;
+		return false;
+	}
 }

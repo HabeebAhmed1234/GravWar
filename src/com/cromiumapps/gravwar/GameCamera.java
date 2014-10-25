@@ -24,6 +24,10 @@ public class GameCamera extends Camera {
 		this.context = context;
 		setScreenSize();
 	}
+	
+	public float getScreenHeight(){
+		return this.getHeight();
+	}
 
 	@SuppressLint("NewApi")
 	private void setScreenSize()

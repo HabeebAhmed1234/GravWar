@@ -29,6 +29,13 @@ public class HUD {
 		initMissilesSelectedText();
 	}
 	
+	public boolean arePlanetsConnected(Planet a, Planet b){
+		for(Path path : paths){
+			if(path.isIncidentTo(a, b)) return true;
+		}
+		return false;
+	}
+	
 	public void renderPaths() 
 	{
 		Log.d("GravWar","HUD: rendering paths");

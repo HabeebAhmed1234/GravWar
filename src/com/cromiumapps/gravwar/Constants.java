@@ -34,6 +34,6 @@ public class Constants {
 	public static final float MISSILE_ROTATION_SPEED = 0.08f; 
 	
 	//Ai constants
-	public static final float PERCENTAGE_OF_MISSILES_TO_BE_FIRED_BY_AI = 0.5f;
+	public static final float PERCENTAGE_OF_MISSILES_TO_BE_FIRED_BY_AI = 0.75f;
 	
 }

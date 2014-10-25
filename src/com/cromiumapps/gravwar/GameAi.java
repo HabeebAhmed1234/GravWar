@@ -4,30 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.andengine.engine.handler.IUpdateHandler;
-
-import android.util.Log;
-
 public class GameAi {
 	private GameManager gameManager;
 	
 	GameAi(GameManager gameManager)
 	{
 		this.gameManager = gameManager;	
-		//computeMoves();
 	}
 	
 	public void update(float secondsElapsed){
-		//if(gameManager.getGameClock() % Constants.GAME_AI_MOVE_COMPUTE_UPDATE_INTERVAL == 0)computeMoves();
 		if(gameManager.getGameClock() % Constants.GAME_AI_MAKE_MOVE_INTERVAL == 0)executeOneMove();
 	}
 	
 	private void executeOneMove()
 	{
-
-		//Move move  = movesList.get(0);
-		//gameManager.makeAMove(move);
-		//if(movesList.size()>0)movesList.remove(0);
 		Move move = getMove();
 		if (move != null)
 			gameManager.makeAMove(move);
@@ -44,7 +34,7 @@ public class GameAi {
 				try{
 					Planet planetA = allPlanets.get(i);
 					Planet planetB = allPlanets.get(x);
-					if(planetA.getId() != planetB.getId())
+					if(planetA.getId() != planetB.getId() && gameManager.getHud().arePlanetsConnected(planetA, planetB))
 					{
 						if(planetA.isEnemy() && planetB.isPlayerPlanet())
 						{
@@ -84,13 +74,27 @@ public class GameAi {
 		Arrays.sort (movesArray, new Comparator<Move>() {
             @Override
             public int compare(Move a, Move b) {
-            	float ay = gameManager.planetManager.getPlanetByID(a.toPlanetId).getPosition().getY();
-            	float by = gameManager.planetManager.getPlanetByID(b.toPlanetId).getPosition().getY();
-            	if(ay > by){
+            	Planet aToPlanet = gameManager.planetManager.getPlanetByID(a.toPlanetId);
+            	Planet bToPlanet = gameManager.planetManager.getPlanetByID(b.toPlanetId);
+            	Planet aFromPlanet = gameManager.planetManager.getPlanetByID(a.fromPlanetId);
+            	Planet bFromPlanet = gameManager.planetManager.getPlanetByID(b.fromPlanetId);
+            	
+            	//the bigger a factor the better the move
+            	//the weights should add up to 100
+            	float aPositionFactor = getPositionFactor(aToPlanet, 50);
+            	float aHealthFactor = getHealthFactor(aFromPlanet, aToPlanet,50);
+
+            	float bPositionFactor = getPositionFactor(bToPlanet, 50);
+            	float bHealthFactor = getHealthFactor(bFromPlanet, bToPlanet,50);
+            	
+            	float aFactor = aPositionFactor + aHealthFactor;
+            	float bFactor = bPositionFactor + bHealthFactor;
+            	
+            	if(aFactor > bFactor){
             		return 1;
-            	}else if (by == ay){
+            	}else if (aFactor == bFactor){
             		return 0;
-            	}else if (ay < by){
+            	}else if (aFactor < bFactor){
             		return -1;
             	}
             	return 0;
@@ -104,49 +108,16 @@ public class GameAi {
 		}
 	}
 	
-	/*private void computeMoves()
-	{
-		ArrayList <Planet> allPlanets = gameManager.planetManager.getAllPlanets();
-		
-		for(int i = 0 ; i < allPlanets.size() ; i++)
-		{
-			for(int x = 0 ; x < allPlanets.size() ; x++)
-			{
-				try{
-					Planet planetA = allPlanets.get(i);
-					Planet planetB = allPlanets.get(x);
-					if(planetA.getId() != planetB.getId())
-					{
-						if(planetA.isEnemy() && planetB.isPlayerPlanet())
-						{
-							movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true));
-						}
-						
-						if(planetB.isEnemy() && planetA.isPlayerPlanet())
-						{
-							movesList.add(new Move(howManyMissilesShouldIFire(planetB), planetB, planetA,true));
-						}
-						
-						if(planetA.isEnemy() && planetB.isNeutral())
-						{
-							movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true));
-						}
-						
-						if(planetA.isEnemy() && planetB.isEnemy())
-						{
-							if(planetA.getPosition().getY()>planetB.getPosition().getY()){
-								movesList.add(new Move(howManyMissilesShouldIFire(planetA), planetA, planetB,true)); 
-							}else{
-								movesList.add(new Move(howManyMissilesShouldIFire(planetB), planetB, planetA,true)); 
-							}
-						}
-					}
-				}catch (InvalidMoveException e){
-					e.printWhat();
-				}
-			}	
-		}
-	}*/
+	//minimum factor value is 0 and max factor value is weight
+	private float getPositionFactor(Planet moveToPlanet, float weight){
+		return moveToPlanet.getPosition().getY()/ gameManager.getGameCamera().getHeight() * weight;
+	}
+	
+	private float getHealthFactor(Planet moveFromPlanet, Planet moveToPlanet, float weight){
+		float diff = moveFromPlanet.getHealthInMissiles() - moveToPlanet.getHealthInMissiles();
+		if(diff<0) return 0;
+		return diff/Constants.PLANET_MAX_HEALTH * weight;
+	}
 	
 	private float howManyMissilesShouldIFire(Planet planet)
 	{

@@ -24,10 +24,12 @@ public class GameManager {
 	
 	//andengine objects
 	private GameCamera gameCamera;
+	public GameCamera getGameCamera(){return gameCamera;}
 	private GameAi gameAi;
 	private CollisionManager collisionManager;
 	private GameOutcomeListener gameOutcomeListener;
 	private HUD hud;
+	public HUD getHud(){return hud;}
 	
 	private float gameClock = 0;
 	//managers
@@ -160,6 +162,7 @@ public class GameManager {
 					this.missileSwarmManager.addMissileSwarm( planetManager.getPlanetByID(move.fromPlanetId)
 															, planetManager.getPlanetByID(move.toPlanetId)
 															, move.missilesToFireAmmount);
+					if(move.isAiMove) planetManager.getPlanetByID(move.fromPlanetId).damageHealth(move.missilesToFireAmmount);
 				} catch (InvalidMissileException e) {
 					e.printWhat();
 				}
