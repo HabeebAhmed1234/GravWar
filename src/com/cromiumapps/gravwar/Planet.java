@@ -65,7 +65,7 @@ public class Planet {
 		m_planetSprite = new GameSprite(x,y,planetTexture, vertexBufferObjectManager,true,engine){
 		    @Override
 		    public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-		    	if(pSceneTouchEvent.isActionUp())gameManager.onTouchPlanet(pSceneTouchEvent,(Float) (this.getUserData()));
+		    	gameManager.onTouchPlanet(pSceneTouchEvent,(Float) (this.getUserData()));
 				return true;
 		    }
 		};
@@ -100,8 +100,8 @@ public class Planet {
 		{
 			if(this.m_healthInMissiles>Constants.PLANET_MISSILES_PER_SELECTION)
 			{
-				this.damageHealth(Constants.PLANET_MISSILES_PER_SELECTION);
-				gameManager.numMissilesReadyToFire += Constants.PLANET_MISSILES_PER_SELECTION;
+				if(damageHealth(Constants.PLANET_MISSILES_PER_SELECTION))
+					gameManager.numMissilesReadyToFire += Constants.PLANET_MISSILES_PER_SELECTION;
 			}
 		}
 	}
@@ -156,14 +156,10 @@ public class Planet {
 		return this.m_healthInMissiles;
 	}
 	
-	public void setHealthInMissiles(int health)
+	//returns true is sucessfully damaged else false
+	public boolean damageHealth(float damage)
 	{
-		this.m_healthInMissiles = health;
-	}
-	
-	public void damageHealth(float damage)
-	{
-		if(m_planetType == PlanetType.PLANET_TYPE_NEUTRAL || (m_healthInMissiles-damage)<0) return;
+		if(m_planetType == PlanetType.PLANET_TYPE_NEUTRAL || (m_healthInMissiles-damage)<0) return false;
 		this.m_healthInMissiles -= damage;
 		if(this.m_healthInMissiles <=0)
 		{
@@ -172,6 +168,7 @@ public class Planet {
 		}
 		updateSprite();
 		updateHealthText();
+		return true;
 	}
 	
 	public void increaseHealth(float increase)

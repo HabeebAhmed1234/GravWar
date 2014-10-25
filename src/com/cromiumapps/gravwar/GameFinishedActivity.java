@@ -1,26 +1,34 @@
 package com.cromiumapps.gravwar;
 
-import cromiumapps.gravwar.R;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cromiumapps.gravwar.Constants.GAME_OUTCOME;
+
+import cromiumapps.gravwar.R;
+
 public class GameFinishedActivity extends Activity implements OnClickListener {
-	private int gameOutCome;
+	private GAME_OUTCOME gameOutCome;
 	private float gameTime = 0;
 	
 	private TextView outComeText;
 	private TextView timeText;
-	private Button restartButton;
-	private Button mainMenuButton;
+	private LinearLayout restartButton;
+	private LinearLayout mainMenuButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_finished);
 		
@@ -30,7 +38,7 @@ public class GameFinishedActivity extends Activity implements OnClickListener {
 			Bundle extras = intent.getExtras();
 			if(extras!=null)
 			{
-				gameOutCome = (Integer) extras.get(Constants.GAME_OUTCOME_EXTRA_KEY);
+				gameOutCome = GAME_OUTCOME.values()[(Integer)extras.get(Constants.GAME_OUTCOME_EXTRA_KEY)];
 				gameTime = (Float) extras.get(Constants.GAME_TIME_ELAPSED_EXTRA_KEY);
 			}
 		}
@@ -48,14 +56,23 @@ public class GameFinishedActivity extends Activity implements OnClickListener {
 	private void initViews()
 	{
 		outComeText = (TextView)findViewById(R.id.gameoutcometext);
-		if(gameOutCome == Constants.GAME_WON) outComeText.setText(Constants.GAME_WON_TEXT);
-		if(gameOutCome == Constants.GAME_LOST) outComeText.setText(Constants.GAME_LOST_TEXT);
+		
+		if(gameOutCome == GAME_OUTCOME.WIN) outComeText.setText(getResources().getString(R.string.gamewonmessage));
+		if(gameOutCome == GAME_OUTCOME.LOSE) outComeText.setText(getResources().getString(R.string.gamelostmessage));
+		
 		timeText = (TextView)findViewById(R.id.timetext);
 		timeText.setText("time: "+gameTime);
-		restartButton = (Button)findViewById(R.id.restartbutton);
+		
+		restartButton = (LinearLayout)findViewById(R.id.restartbutton);
 		restartButton.setOnClickListener(this);
-		mainMenuButton = (Button)findViewById(R.id.mainmenubutton);
+		
+		mainMenuButton = (LinearLayout)findViewById(R.id.mainmenubutton);
 		mainMenuButton.setOnClickListener(this);
+		
+		((TextView)findViewById(R.id.restartbuttontext)).setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
+		((TextView)findViewById(R.id.mainmenubuttontext)).setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
+		timeText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
+		outComeText.setTypeface(Typeface.createFromAsset(getAssets(),"fnt/heavy_data.ttf"));
 	}
 
 	@Override

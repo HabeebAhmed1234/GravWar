@@ -1,18 +1,18 @@
 package com.cromiumapps.gravwar;
 
-import com.cromiumapps.gravwar.PreferencesManager.Difficulty;
-
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.cromiumapps.gravwar.PreferencesManager.Difficulty;
+
 import cromiumapps.gravwar.R;
 
 public class MainMenuActivity extends Activity implements OnClickListener{
@@ -29,6 +29,8 @@ public class MainMenuActivity extends Activity implements OnClickListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 		

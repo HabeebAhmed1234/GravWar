@@ -180,50 +180,59 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f060007;
-        public static final int main_menu_title_bottom_padding=0x7f060006;
-        public static final int main_menu_top_padding=0x7f060005;
-        public static final int menu_item_size=0x7f060001;
-        public static final int menu_item_spacing=0x7f060003;
-        public static final int menu_sub_item_size=0x7f060002;
-        public static final int menu_sub_item_spacing=0x7f060004;
+        public static final int activity_horizontal_margin=0x7f06000a;
+        public static final int heading_size=0x7f060001;
+        public static final int heading_to_menu_item_spacing=0x7f060009;
+        public static final int main_menu_title_bottom_padding=0x7f060007;
+        public static final int main_menu_top_padding=0x7f060006;
+        public static final int menu_item_size=0x7f060002;
+        public static final int menu_item_spacing=0x7f060004;
+        public static final int menu_sub_item_size=0x7f060003;
+        public static final int menu_sub_item_spacing=0x7f060005;
+        public static final int menu_to_icon_spacing=0x7f060008;
         public static final int title_text_size=0x7f060000;
     }
     public static final class drawable {
         public static final int easy_btn=0x7f020000;
         public static final int exit_btn=0x7f020001;
         public static final int hard_btn=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int normal_btn=0x7f020004;
-        public static final int play_btn=0x7f020005;
-        public static final int settings_btn=0x7f020006;
+        public static final int home_btn=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int normal_btn=0x7f020005;
+        public static final int play_btn=0x7f020006;
+        public static final int restart_btn=0x7f020007;
+        public static final int settings_btn=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0019;
-        public static final int difficultysettingsframe=0x7f0a000b;
-        public static final int easybutton=0x7f0a000c;
-        public static final int easybuttonimage=0x7f0a000e;
-        public static final int easybuttontext=0x7f0a000d;
-        public static final int exitbutton=0x7f0a0015;
-        public static final int exitbuttonimage=0x7f0a0017;
-        public static final int exitbuttontext=0x7f0a0016;
+        public static final int action_settings=0x7f0a001d;
+        public static final int difficultysettingsframe=0x7f0a000f;
+        public static final int easybutton=0x7f0a0010;
+        public static final int easybuttonimage=0x7f0a0012;
+        public static final int easybuttontext=0x7f0a0011;
+        public static final int exitbutton=0x7f0a0019;
+        public static final int exitbuttonimage=0x7f0a001b;
+        public static final int exitbuttontext=0x7f0a001a;
         public static final int gameoutcometext=0x7f0a0000;
-        public static final int gametitletext=0x7f0a0004;
-        public static final int hardbutton=0x7f0a0012;
-        public static final int hardbuttonimage=0x7f0a0014;
-        public static final int hardbuttontext=0x7f0a0013;
-        public static final int mainmenubutton=0x7f0a0003;
-        public static final int menu_settings=0x7f0a0018;
-        public static final int normalbutton=0x7f0a000f;
-        public static final int normalbuttonimage=0x7f0a0011;
-        public static final int normalbuttontext=0x7f0a0010;
-        public static final int playgameimage=0x7f0a0007;
-        public static final int quickgamebutton=0x7f0a0005;
-        public static final int quickgamebuttontext=0x7f0a0006;
+        public static final int gametitletext=0x7f0a0008;
+        public static final int hardbutton=0x7f0a0016;
+        public static final int hardbuttonimage=0x7f0a0018;
+        public static final int hardbuttontext=0x7f0a0017;
+        public static final int homeimage=0x7f0a0007;
+        public static final int mainmenubutton=0x7f0a0005;
+        public static final int mainmenubuttontext=0x7f0a0006;
+        public static final int menu_settings=0x7f0a001c;
+        public static final int normalbutton=0x7f0a0013;
+        public static final int normalbuttonimage=0x7f0a0015;
+        public static final int normalbuttontext=0x7f0a0014;
+        public static final int playgameimage=0x7f0a000b;
+        public static final int quickgamebutton=0x7f0a0009;
+        public static final int quickgamebuttontext=0x7f0a000a;
         public static final int restartbutton=0x7f0a0002;
-        public static final int settingsbutton=0x7f0a0008;
-        public static final int settingsbuttonimage=0x7f0a000a;
-        public static final int settingsbuttontext=0x7f0a0009;
+        public static final int restartbuttontext=0x7f0a0003;
+        public static final int restartimage=0x7f0a0004;
+        public static final int settingsbutton=0x7f0a000c;
+        public static final int settingsbuttonimage=0x7f0a000e;
+        public static final int settingsbuttontext=0x7f0a000d;
         public static final int timetext=0x7f0a0001;
     }
     public static final class layout {
@@ -241,7 +250,9 @@ public final class R {
         public static final int app_name=0x7f070000;
         public static final int easybuttonlabel=0x7f07000b;
         public static final int exitbuttonlabel=0x7f07000a;
+        public static final int gamelostmessage=0x7f070011;
         public static final int gametitle=0x7f070006;
+        public static final int gamewonmessage=0x7f070010;
         public static final int hardbuttonlabel=0x7f07000d;
         public static final int hello_world=0x7f070002;
         public static final int mainmenubuttonlabel=0x7f07000e;

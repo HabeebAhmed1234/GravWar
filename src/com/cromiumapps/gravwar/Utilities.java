@@ -1,5 +1,6 @@
 package com.cromiumapps.gravwar;
 
+import com.cromiumapps.gravwar.Constants.GAME_OUTCOME;
 import com.cromiumapps.gravwar.MainActivity;
 
 import android.app.Activity;
@@ -57,10 +58,10 @@ public class Utilities {
 	    context.finish();
 	}
 	
-	public static void startGameFinishedActivity(Activity context, int gameOutCome, float timeElapsed)
+	public static void startGameFinishedActivity(Activity context, GAME_OUTCOME gameOutCome, float timeElapsed)
 	{
 		Intent intent = new Intent(context, GameFinishedActivity.class);  
-		intent.putExtra(Constants.GAME_OUTCOME_EXTRA_KEY, gameOutCome);
+		intent.putExtra(Constants.GAME_OUTCOME_EXTRA_KEY, gameOutCome.ordinal());
 		intent.putExtra(Constants.GAME_TIME_ELAPSED_EXTRA_KEY, timeElapsed);
 		context.startActivity(intent);  
 		context.finish();

@@ -18,7 +18,9 @@
     <string name="normalbuttonlabel">Normal</string>
     <string name="hardbuttonlabel">Hard</string>
     
-    <string name="mainmenubuttonlabel">Main Menu</string>
-    <string name="outcometextlabel">Outcome</string>
+    <string name="mainmenubuttonlabel">Home</string>
+    <string name="outcometextlabel">GAME OVER</string>
 
+    <string name="gamewonmessage">Victory!</string>
+    <string name="gamelostmessage">Defeat</string>    
 </resources>

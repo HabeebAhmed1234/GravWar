@@ -25,8 +25,8 @@ public class GameResourceManager {
 	public static final String EXPLOSION_1_IMAGE_FILE_PATH = "explosion1.png";
 	public static final String EXPLOSION_3_IMAGE_FILE_PATH = "explosion3.png";
 	
-	public static final String PLAYER_DOCK_IMAGE_FILE_PATH = "playerdock.png";
-	public static final String ENEMY_DOCK_IMAGE_FILE_PATH = "enemydock.png";
+	public static final String PLAYER_DOCK_IMAGE_FILE_PATH = "playerdock2.png";
+	public static final String ENEMY_DOCK_IMAGE_FILE_PATH = "enemydock2.png";
 	
 	public static ITiledTextureRegion tiledPlanetTexture; 
 	private static ITiledTextureRegion missileTexturePlayer;
@@ -69,11 +69,11 @@ public class GameResourceManager {
 		missileTexturePlayer = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas1, context, MISSILE_PLAYER_IMAGE_FILE_PATH, 0, 920,1,1);
 		missileTextureEnemy = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas1, context, MISSILE_ENEMY_IMAGE_FILE_PATH, 33, 920,1,1);
 		
-		playerDockTexture = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas2, context, PLAYER_DOCK_IMAGE_FILE_PATH, 0, 128 ,10,1);
-		enemyDockTexture = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas2, context, ENEMY_DOCK_IMAGE_FILE_PATH, 0, 205 ,10,1);
-		explosionTextures.add(BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas2, context, EXPLOSION_1_IMAGE_FILE_PATH, 0, 282,5,3));
+		playerDockTexture = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas2, context, PLAYER_DOCK_IMAGE_FILE_PATH, 0, 0 ,4,4);
+		enemyDockTexture = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas2, context, ENEMY_DOCK_IMAGE_FILE_PATH, 0, 308 ,4,4);
 		
-		explosionTextures.add(BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas3, context, EXPLOSION_3_IMAGE_FILE_PATH, 0, 0,3,4));
+		explosionTextures.add(BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas3, context, EXPLOSION_1_IMAGE_FILE_PATH, 0, 0,5,3));
+		explosionTextures.add(BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(BitmapTextureAtlas3, context, EXPLOSION_3_IMAGE_FILE_PATH, 0, 288,3,4));
 		
 		Log.d(TAG, "BitmapTextureAtlas.load"); 
 		BitmapTextureAtlas1.load(); 

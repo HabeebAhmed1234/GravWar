@@ -3,6 +3,8 @@ package com.cromiumapps.gravwar;
 import java.util.ArrayList;
 
 import org.andengine.entity.primitive.Line;
+import org.andengine.entity.text.Text;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.cromiumapps.gravwar.Planet.PlanetType;
 
@@ -12,15 +14,19 @@ import android.util.Log;
 
 public class HUD {
 	public static final String TAG = "HUD";
-	ArrayList <Path> paths = new ArrayList<Path>();
-	GameScene gameScene;
+	private ArrayList <Path> paths = new ArrayList<Path>();
+	private GameScene gameScene;
+	private VertexBufferObjectManager vertexBufferObjectManager;
+	private Text missilesSelectedText;
 	
-	HUD(ArrayList <Path> paths, GameScene gameScene)
+	HUD(ArrayList <Path> paths, GameScene gameScene, VertexBufferObjectManager vertexBufferObjectManager)
 	{
 		this.gameScene = gameScene;
 		this.paths = paths;
+		this.vertexBufferObjectManager = vertexBufferObjectManager;
 		Log.d("GravWar","HUD: HUD initialized with "+this.paths.size() +" paths");
 		renderPaths();
+		initMissilesSelectedText();
 	}
 	
 	public void renderPaths() 
@@ -53,5 +59,14 @@ public class HUD {
 		}
 		
 		return false;
+	}
+	
+	private void initMissilesSelectedText(){
+		this.missilesSelectedText = new Text(50, 50, GameResourceManager.font, "0", 5, vertexBufferObjectManager);
+	    this.gameScene.attachChild(missilesSelectedText);
+	}
+	
+	public void updateMissilesSelectedText(float numMissiles){
+		missilesSelectedText.setText(Float.toString(numMissiles));
 	}
 }

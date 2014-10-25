@@ -2,12 +2,9 @@ package com.cromiumapps.gravwar;
 
 public class Constants {
 	//game outcome constants
-	public static final int GAME_WON = 0;
-	public static final int GAME_LOST = 1;
+	public static enum GAME_OUTCOME {WIN, LOSE};
 	public static final String GAME_OUTCOME_EXTRA_KEY = "gameoutcomeextrakey";
 	public static final String GAME_TIME_ELAPSED_EXTRA_KEY = "gametimeelapsedextrakey";
-	public static final String GAME_WON_TEXT = "You Won!";
-	public static final String GAME_LOST_TEXT = "You Lost ...";
 	
 	//update intervals
 	public static final float PLANET_REGENERATION_INTERVAL = 25;

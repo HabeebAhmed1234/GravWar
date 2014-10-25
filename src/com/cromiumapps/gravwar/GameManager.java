@@ -7,13 +7,15 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import com.cromiumapps.gravwar.Constants.GAME_OUTCOME;
+
 import android.util.Log;
 import android.view.MotionEvent;
 
 public class GameManager {
 	interface GameOutcomeListener
 	{
-		public void onGameOutComeListener(int gameOutCom, float timeElapsed);
+		public void onGameComplete(GAME_OUTCOME gameOutCom, float timeElapsed);
 	}
 	
 	public static String TAG = "GameManager";
@@ -98,7 +100,7 @@ public class GameManager {
 	{
 		LevelGenerator levelGenerator = new LevelGenerator(gameCamera.getWidth(),gameCamera.getHeight(), mEngine, this.vertexBufferObjectManager, this.gameScene, this);
 		Level level = levelGenerator.generateLevel();
-		this.hud = new HUD(level.getPaths(),gameScene);
+		this.hud = new HUD(level.getPaths(),gameScene,vertexBufferObjectManager);
 		planetManager = new PlanetManager(level.getPlanets(), mEngine, vertexBufferObjectManager, this.gameScene, this);
 	}
 	
@@ -115,32 +117,35 @@ public class GameManager {
 	{
 		if(planetManager.isAllEnemies())
 		{
-			gameOutcomeListener.onGameOutComeListener(Constants.GAME_LOST, gameClock);
+			gameOutcomeListener.onGameComplete(GAME_OUTCOME.LOSE, gameClock);
 		}
 		
 		if(planetManager.isAllPlayers())
 		{
-			gameOutcomeListener.onGameOutComeListener(Constants.GAME_WON, gameClock);
+			gameOutcomeListener.onGameComplete(GAME_OUTCOME.WIN, gameClock);
 		} 
 	}
 	
 	public void onTouchAnywhere(TouchEvent event)
 	{
 		Log.d("GravWar", "GameManager: touch event occured");
-		planetManager.deSelectAllPlanets();
+		//planetManager.deSelectAllPlanets(); 
 	}
 	
 	public void onTouchPlanet(TouchEvent event, float touchedPlanetID)
 	{
+		if(!event.isActionUp()) return;
 		Log.d("GravWar", "GameManager: touch event on a planet of id +" + touchedPlanetID);
 		Planet prevSelectedPlanet = planetManager.getSelectedPlanet();
 		Planet touchedPlanet = planetManager.getPlanetByID(touchedPlanetID);
 		try {
 			if(prevSelectedPlanet!=null)makeAMove(new Move(numMissilesReadyToFire,prevSelectedPlanet,touchedPlanet,false));
+			numMissilesReadyToFire = 0;
 		} catch (InvalidMoveException e) {
 			e.printWhat();
 		}
 		planetManager.selectPlanetByID(touchedPlanetID);
+		this.hud.updateMissilesSelectedText(numMissilesReadyToFire);
 	}
 	
 	public void makeAMove(Move move)
@@ -155,7 +160,6 @@ public class GameManager {
 					this.missileSwarmManager.addMissileSwarm( planetManager.getPlanetByID(move.fromPlanetId)
 															, planetManager.getPlanetByID(move.toPlanetId)
 															, move.missilesToFireAmmount);
-					planetManager.getPlanetByID(move.fromPlanetId).damageHealth(move.missilesToFireAmmount);
 				} catch (InvalidMissileException e) {
 					e.printWhat();
 				}
