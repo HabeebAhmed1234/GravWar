@@ -23,22 +23,32 @@ public class Missile {
 	private GameSprite mDockSprite;
 	private final PlanetType fromPlanetType;
 	private final float fromPlanetId;
+	private final float toPlanetId;
 	private float m_id = 0;
 	private float v_x = 3;
 	private float v_y = 3;
 	
-	Missile(float [] vxvy, float id, Planet fromPlanet, Position origin, Position destination, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene) throws InvalidMissileException
+	Missile(float [] vxvy
+		  , float id
+		  , Planet fromPlanet
+		  , Position origin
+		  , Planet toPlanet
+		  , Engine engine
+		  , VertexBufferObjectManager vertexBufferObjectManager
+		  , GameScene gameScene) throws InvalidMissileException
 	{ 
 		m_id = id;
 		mGameScene = gameScene;
 		mEngine = engine;
-		this.fromPlanetType = fromPlanet.getPlanetType();
-		this.fromPlanetId = fromPlanet.getId();
+		fromPlanetType = fromPlanet.getPlanetType();
+		fromPlanetId = fromPlanet.getId();
+		toPlanetId = toPlanet.getId();
 		if(fromPlanetType == PlanetType.PLANET_TYPE_NEUTRAL) throw new InvalidMissileException("origin planet is neutral");
 		this.v_x = vxvy[0];    
 		this.v_y = vxvy[1];
 		m_position = new Position(origin.getX(),origin.getY());
 		m_originPosition = new Position(origin.getX(),origin.getY());
+		Position destination = toPlanet.getPosition();
 		m_destinationPosition = new Position(destination.getX(),destination.getY());
 
         mExplosionSprite = new GameSprite(0, 0, GameResourceManager.getExplosionTextureRegion(), vertexBufferObjectManager, true,mEngine);
@@ -55,6 +65,10 @@ public class Missile {
 	
 	public float getSourcePlanetId(){
 		return this.fromPlanetId;
+	}
+	
+	public float getToPlanetId(){
+		return this.toPlanetId;
 	}
 	
 	public PlanetType getSourcePlanetType()

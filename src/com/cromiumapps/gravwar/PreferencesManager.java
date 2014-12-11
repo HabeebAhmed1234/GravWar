@@ -44,7 +44,7 @@ public class PreferencesManager {
 	
 	public Difficulty getDifficulty(){
 		int diff = getInt(DIFFICULTY_KEY);
-		if(diff == -1) return null;
+		if(diff == -1) return Difficulty.EASY;
 		return Difficulty.values()[getInt(DIFFICULTY_KEY)];
 	}
 	

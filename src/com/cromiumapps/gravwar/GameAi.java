@@ -4,16 +4,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import com.cromiumapps.gravwar.PreferencesManager.Difficulty;
+
 public class GameAi {
 	private GameManager gameManager;
+	private float mMakeMoveInterval = 100;
 	
-	GameAi(GameManager gameManager)
+	GameAi(GameManager gameManager, Difficulty difficulty)
 	{
 		this.gameManager = gameManager;	
+		if (difficulty == Difficulty.EASY){
+			mMakeMoveInterval = Constants.GAME_AI_MAKE_MOVE_INTERVAL_EASY;
+		} else if (difficulty == Difficulty.NORMAL){
+			mMakeMoveInterval = Constants.GAME_AI_MAKE_MOVE_INTERVAL_MEDIUM;
+		} else if (difficulty == Difficulty.HARD){
+			mMakeMoveInterval = Constants.GAME_AI_MAKE_MOVE_INTERVAL_EASY;
+		}
 	}
 	
 	public void update(float secondsElapsed){
-		if(gameManager.getGameClock() % Constants.GAME_AI_MAKE_MOVE_INTERVAL == 0)executeOneMove();
+		if(gameManager.getGameClock() % mMakeMoveInterval == 0) executeOneMove();
 	}
 	
 	private void executeOneMove()

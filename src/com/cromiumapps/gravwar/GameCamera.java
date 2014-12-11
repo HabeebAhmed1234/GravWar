@@ -2,12 +2,6 @@ package com.cromiumapps.gravwar;
 
 import org.andengine.engine.camera.Camera;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Point;
-import android.view.Display;
-
 
 
 public class GameCamera extends Camera {
@@ -17,19 +11,16 @@ public class GameCamera extends Camera {
 	public static float desiredWidth = 450;
 	public static float desiredHeight = 800;
 	
-	private Activity context;
-	
-	public GameCamera(Activity context) {
+	public GameCamera() {
 		super(0, 0, desiredWidth, desiredHeight);
-		this.context = context;
-		setScreenSize();
+		//setScreenSize();
 	}
 	
 	public float getScreenHeight(){
 		return this.getHeight();
 	}
 
-	@SuppressLint("NewApi")
+	/*@SuppressLint("NewApi")
 	private void setScreenSize()
 	{
 		int width = 0;
@@ -60,5 +51,5 @@ public class GameCamera extends Camera {
 		GAME_SCALING_FACTOR = (desiredWidth + desiredHeight) / (width + height);
 		desiredWidth= width;
 		desiredHeight = height;
-	}
+	}*/
 }

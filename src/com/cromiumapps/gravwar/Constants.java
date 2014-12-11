@@ -7,14 +7,18 @@ public class Constants {
 	public static final String GAME_TIME_ELAPSED_EXTRA_KEY = "gametimeelapsedextrakey";
 	
 	//update intervals
-	public static final float PLANET_REGENERATION_INTERVAL = 25;
+	public static final float PLANET_REGENERATION_INTERVAL = 100;
 	public static final float COLLISION_CHECK_INTERVAL = 5;
 	public static final float MISSILE_SWARM_UPDATE_INTERVAL = 1;
 	public static final float PLANET_UPDATE_INTERVAL = 1;
 	public static final float GAME_OUTCOME_CHECK_INTERVAL = 100;
+	
 	public static final float GAME_AI_UPDATE_INTERVAL = 1;
-	public static final float GAME_AI_MOVE_COMPUTE_UPDATE_INTERVAL = 30; //must be multiple of GAME_AI_UPDATE_INTERVAL
-	public static final float GAME_AI_MAKE_MOVE_INTERVAL =50; //must be multiple of GAME_AI_UPDATE_INTERVAL
+	public static final float GAME_AI_MAKE_MOVE_INTERVAL_HARD =20; 
+	public static final float GAME_AI_MOVE_COMPUTE_UPDATE_INTERVAL_MEDIUM = 20;
+	public static final float GAME_AI_MAKE_MOVE_INTERVAL_MEDIUM = 40;
+	public static final float GAME_AI_MOVE_COMPUTE_UPDATE_INTERVAL_EASY = 40; 
+	public static final float GAME_AI_MAKE_MOVE_INTERVAL_EASY =80;
 	
 	//planet constants
 	public static final float PLANET_HEALTH_IN_MISSILES_TO_DIAMETER_RATIO = 5;

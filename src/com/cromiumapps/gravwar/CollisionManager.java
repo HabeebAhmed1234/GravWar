@@ -40,7 +40,7 @@ public class CollisionManager {
 	
 	private boolean isColliding(Missile missile, Planet planet)
 	{
-		if(missile.getSourcePlanetId() == planet.getId()) return false;
+		if (missile.getToPlanetId() != planet.getId()) return false;
 		return missile.getSprite().collidesWith(planet.getSprite());
 	}
 	

@@ -22,7 +22,7 @@ public class MissileSwarmManager {
 	
 	public void addMissileSwarm(Planet fromPlanet, Planet toPlanet, float numPlanetsReadyToFire) throws InvalidMissileException
 	{
-		MissileSwarm newMissileSwarm = new MissileSwarm(getUniqueMissileSwarmId(),fromPlanet,numPlanetsReadyToFire, fromPlanet.getDiameter()/2, fromPlanet.getPosition(), toPlanet.getPosition(), gameScene, mEngine, vertexBufferObjectManager);
+		MissileSwarm newMissileSwarm = new MissileSwarm(getUniqueMissileSwarmId(),fromPlanet, toPlanet, numPlanetsReadyToFire, fromPlanet.getDiameter()/2, fromPlanet.getPosition(), toPlanet.getPosition(), gameScene, mEngine, vertexBufferObjectManager);
 		m_missileSwarms.add(newMissileSwarm);
 		Log.d("MissileSystem","New Missile Swarm added id = "+newMissileSwarm.getId());
 	}

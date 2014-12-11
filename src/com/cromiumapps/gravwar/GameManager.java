@@ -4,13 +4,12 @@ import org.andengine.engine.Engine;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import com.cromiumapps.gravwar.Constants.GAME_OUTCOME;
-
+import android.content.Context;
 import android.util.Log;
-import android.view.MotionEvent;
+
+import com.cromiumapps.gravwar.Constants.GAME_OUTCOME;
 
 public class GameManager {
 	interface GameOutcomeListener
@@ -19,6 +18,7 @@ public class GameManager {
 	}
 	
 	public static String TAG = "GameManager";
+	private Context mContext;
 	
 	private VertexBufferObjectManager vertexBufferObjectManager;
 	
@@ -40,8 +40,9 @@ public class GameManager {
 	
 	public float numMissilesReadyToFire = 0;
 	
-	GameManager(GameOutcomeListener gameOutcomeListener, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameCamera gameCamera)
+	GameManager(Context context, GameOutcomeListener gameOutcomeListener, Engine engine, VertexBufferObjectManager vertexBufferObjectManager, GameScene gameScene, GameCamera gameCamera)
 	{
+		mContext = context;
 		this.gameOutcomeListener = gameOutcomeListener;
 		this.mEngine = engine;
 		this.vertexBufferObjectManager =  vertexBufferObjectManager;
@@ -55,7 +56,7 @@ public class GameManager {
 		//buildWalls();
 		
 		createGameLoop();
-		this.gameAi = new GameAi(this);
+		this.gameAi = new GameAi(this, PreferencesManager.getInstance(mContext).getDifficulty());
 	}
 	
 	public GameScene getGameScene()
